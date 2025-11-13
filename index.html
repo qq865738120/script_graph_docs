@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Script Graph 脚本图编辑器文档</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Script Graph 脚本图编辑器 - Cocos Creator 可视化脚本编辑插件">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="shortcut icon" type="image/png" href="images/logo.png">
+
+  <!-- 暗黑主题 -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css">
+
+  <!-- 像素字体 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <!-- 自定义像素风样式 -->
+  <style>
+    :root {
+      --theme-color: #34d399;
+      --theme-color-dark: #10b981;
+      --theme-color-light: #6ee7b7;
+      --accent-color: #60a5fa;
+      --base-background-color: #0a0a0a;
+      --base-color: #e0e0e0;
+      --sidebar-background: #1a1a1a;
+      --sidebar-border-color: #34d399;
+    }
+
+    * {
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+    }
+
+    body {
+      background-color: var(--base-background-color);
+      color: var(--base-color);
+      font-family: 'Courier New', monospace;
+      background-image:
+        repeating-linear-gradient(0deg,
+          transparent,
+          transparent 39px,
+          rgba(52, 211, 153, 0.02) 39px,
+          rgba(52, 211, 153, 0.02) 40px),
+        repeating-linear-gradient(90deg,
+          transparent,
+          transparent 39px,
+          rgba(52, 211, 153, 0.02) 39px,
+          rgba(52, 211, 153, 0.02) 40px);
+    }
+
+    .sidebar {
+      background-color: var(--sidebar-background);
+      border-right: 5px solid var(--sidebar-border-color);
+      box-shadow:
+        inset -2px 0 0 0 var(--theme-color),
+        5px 0 0 0 #000;
+      background-image:
+        repeating-linear-gradient(0deg,
+          transparent,
+          transparent 39px,
+          rgba(52, 211, 153, 0.03) 39px,
+          rgba(52, 211, 153, 0.03) 40px);
+    }
+
+    .sidebar-toggle {
+      background-color: transparent;
+      border: 3px solid var(--theme-color);
+      border-radius: 0;
+      box-shadow: 2px 2px 0 0 #000;
+    }
+
+    .sidebar-toggle:hover {
+      background-color: var(--theme-color);
+      box-shadow: 1px 1px 0 0 #000;
+      transform: translate(1px, 1px);
+    }
+
+    .app-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--theme-color);
+      text-shadow: 3px 3px 0 #000;
+      font-family: 'Press Start 2P', cursive;
+      padding: 1.5rem 1rem;
+      border-bottom: 3px solid var(--sidebar-border-color);
+      background: rgba(52, 211, 153, 0.05);
+      position: relative;
+    }
+
+    .app-name::before {
+      content: '▶';
+      margin-right: 0.5rem;
+      color: var(--accent-color);
+      animation: blink 1s step-end infinite;
+    }
+
+    .sidebar ul li a {
+      color: var(--base-color);
+      border-left: 3px solid transparent;
+      transition: all 0.1s;
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .sidebar ul li a::before {
+      content: '▸';
+      position: absolute;
+      left: 0.3rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .sidebar ul li a:hover {
+      color: var(--theme-color);
+      border-left: 3px solid var(--theme-color);
+      text-shadow: 1px 1px 0 #000;
+      background: rgba(52, 211, 153, 0.1);
+    }
+
+    .sidebar ul li a:hover::before {
+      opacity: 1;
+    }
+
+    .sidebar ul li.active>a {
+      color: var(--accent-color);
+      border-left: 3px solid var(--accent-color);
+      font-weight: bold;
+      background: rgba(96, 165, 250, 0.1);
+    }
+
+    .sidebar ul li.active>a::before {
+      content: '▶';
+      opacity: 1;
+    }
+
+    /* 滚动条样式 */
+    ::-webkit-scrollbar {
+      width: 12px;
+      height: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #1a1a1a;
+      border: 2px solid var(--theme-color);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--theme-color);
+      border: 2px solid #000;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-color);
+    }
+
+    ::-webkit-scrollbar-corner {
+      background: #1a1a1a;
+    }
+
+    .markdown-section {
+      max-width: 900px;
+      padding: 30px 15px 40px;
+    }
+
+    .markdown-section h1 {
+      color: var(--theme-color);
+      border-bottom: 3px solid var(--theme-color);
+      padding-bottom: 0.5rem;
+      text-shadow: 2px 2px 0 #000;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.5rem;
+      position: relative;
+      padding-left: 1rem;
+    }
+
+    .markdown-section h1::before {
+      content: '▶';
+      position: absolute;
+      left: 0;
+      color: var(--accent-color);
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+
+      0%,
+      50% {
+        opacity: 1;
+      }
+
+      51%,
+      100% {
+        opacity: 0;
+      }
+    }
+
+    .markdown-section h2 {
+      color: var(--accent-color);
+      border-bottom: 2px solid var(--accent-color);
+      padding-bottom: 0.3rem;
+      text-shadow: 1px 1px 0 #000;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.2rem;
+      position: relative;
+      padding-left: 1rem;
+    }
+
+    .markdown-section h2::before {
+      content: '■';
+      position: absolute;
+      left: 0;
+      color: var(--theme-color);
+    }
+
+    .markdown-section h3 {
+      color: var(--theme-color-light);
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1rem;
+      position: relative;
+      padding-left: 1rem;
+    }
+
+    .markdown-section h3::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--accent-color);
+    }
+
+    .markdown-section a {
+      color: var(--accent-color);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--accent-color);
+      transition: all 0.2s;
+    }
+
+    .markdown-section a:hover {
+      color: var(--theme-color);
+      border-bottom: 2px solid var(--theme-color);
+      text-shadow: 0 0 5px rgba(52, 211, 153, 0.5);
+    }
+
+    .markdown-section code {
+      background-color: #1a1a1a;
+      border: 2px solid var(--theme-color);
+      padding: 3px 8px;
+      font-family: 'Courier New', monospace;
+      color: var(--accent-color);
+      border-radius: 0;
+      font-size: 0.9em;
+      box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.5);
+    }
+
+    .markdown-section pre>code {
+      background-color: #1a1a1a;
+      color: var(--base-color);
+      border: 2px solid var(--theme-color);
+    }
+
+    .markdown-section pre {
+      background-color: #1a1a1a;
+      border: 4px solid var(--theme-color);
+      box-shadow:
+        0 0 0 2px #000,
+        6px 6px 0 0 #000;
+      position: relative;
+      background-image:
+        repeating-linear-gradient(0deg,
+          transparent,
+          transparent 19px,
+          rgba(52, 211, 153, 0.02) 19px,
+          rgba(52, 211, 153, 0.02) 20px);
+    }
+
+    .markdown-section pre::before {
+      content: '< CODE >';
+      position: absolute;
+      top: -3px;
+      right: 10px;
+      background: var(--theme-color);
+      color: #000;
+      padding: 4px 12px;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.6rem;
+      border: 3px solid #000;
+      box-shadow: 3px 3px 0 0 rgba(0, 0, 0, 0.5);
+    }
+
+    .markdown-section pre::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: repeating-linear-gradient(90deg,
+          var(--theme-color) 0px,
+          var(--theme-color) 4px,
+          transparent 4px,
+          transparent 8px);
+    }
+
+    .markdown-section blockquote {
+      border-left: 4px solid var(--accent-color);
+      background: rgba(96, 165, 250, 0.05);
+      padding: 1rem;
+      margin: 1rem 0;
+      box-shadow: 3px 3px 0 0 rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+
+    .markdown-section blockquote::before {
+      content: '💡';
+      position: absolute;
+      top: 0.5rem;
+      left: -2rem;
+      font-size: 1.5rem;
+    }
+
+    .markdown-section ul,
+    .markdown-section ol {
+      padding-left: 2rem;
+    }
+
+    .markdown-section li {
+      margin: 0.5rem 0;
+      position: relative;
+    }
+
+    .markdown-section ul li::marker {
+      content: '▸ ';
+      color: var(--theme-color);
+    }
+
+    .markdown-section ol li::marker {
+      color: var(--accent-color);
+      font-weight: bold;
+    }
+
+    .markdown-section table {
+      border: 4px solid var(--theme-color);
+      border-collapse: separate;
+      border-spacing: 0;
+      box-shadow:
+        0 0 0 2px #000,
+        6px 6px 0 0 #000;
+      background-image:
+        repeating-linear-gradient(0deg,
+          transparent,
+          transparent 39px,
+          rgba(52, 211, 153, 0.02) 39px,
+          rgba(52, 211, 153, 0.02) 40px);
+    }
+
+    .markdown-section table th {
+      background: var(--theme-color);
+      color: #000;
+      border: 3px solid #000;
+      padding: 0.8rem;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.7rem;
+      text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+
+    .markdown-section table th::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: repeating-linear-gradient(90deg,
+          #000 0px,
+          #000 4px,
+          transparent 4px,
+          transparent 8px);
+    }
+
+    .markdown-section table td {
+      border: 2px solid var(--sidebar-border-color);
+      padding: 0.8rem;
+      background: rgba(10, 10, 10, 0.3);
+    }
+
+    .markdown-section table tr:hover {
+      background: rgba(52, 211, 153, 0.1);
+    }
+
+    .markdown-section table tr:hover td {
+      border-color: var(--theme-color);
+    }
+
+    /* 搜索框样式 */
+    .search input {
+      background-color: #1a1a1a;
+      border: 4px solid var(--theme-color);
+      color: var(--base-color);
+      font-family: 'Courier New', monospace;
+      border-radius: 0;
+      padding: 0.8rem 1rem;
+      box-shadow:
+        0 0 0 2px #000,
+        4px 4px 0 0 #000;
+      transition: all 0.2s;
+    }
+
+    .search input:focus {
+      border-color: var(--accent-color);
+      box-shadow:
+        0 0 0 2px #000,
+        4px 4px 0 0 var(--accent-color),
+        0 0 10px rgba(96, 165, 250, 0.3);
+      outline: none;
+    }
+
+    .search input::placeholder {
+      color: rgba(224, 224, 224, 0.5);
+      font-style: italic;
+    }
+
+    .search .results-panel {
+      border: 4px solid var(--theme-color);
+      box-shadow:
+        0 0 0 2px #000,
+        6px 6px 0 0 #000;
+      background: #1a1a1a;
+    }
+
+    .search .matching-post {
+      border-bottom: 2px solid var(--sidebar-border-color);
+    }
+
+    .search .matching-post:hover {
+      background: rgba(52, 211, 153, 0.1);
+    }
+
+    /* 复制代码按钮样式 */
+    .docsify-copy-code-button {
+      background: var(--theme-color) !important;
+      color: #000 !important;
+      border: 2px solid #000 !important;
+      font-family: 'Press Start 2P', cursive !important;
+      font-size: 0.6rem !important;
+    }
+
+    .docsify-copy-code-button:hover {
+      background: var(--accent-color) !important;
+      box-shadow: 2px 2px 0 0 #000 !important;
+    }
+
+    /* 封面样式 */
+    section.cover {
+      background:
+        repeating-linear-gradient(0deg,
+          transparent,
+          transparent 3px,
+          rgba(52, 211, 153, 0.05) 3px,
+          rgba(52, 211, 153, 0.05) 4px),
+        repeating-linear-gradient(90deg,
+          transparent,
+          transparent 3px,
+          rgba(52, 211, 153, 0.05) 3px,
+          rgba(52, 211, 153, 0.05) 4px),
+        repeating-linear-gradient(0deg,
+          transparent,
+          transparent 19px,
+          rgba(96, 165, 250, 0.03) 19px,
+          rgba(96, 165, 250, 0.03) 20px),
+        repeating-linear-gradient(90deg,
+          transparent,
+          transparent 19px,
+          rgba(96, 165, 250, 0.03) 19px,
+          rgba(96, 165, 250, 0.03) 20px),
+        #0a0a0a;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 4px solid var(--theme-color);
+      box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
+    }
+
+    section.cover::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(52, 211, 153, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(96, 165, 250, 0.15) 0%, transparent 40%);
+      pointer-events: none;
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 0.6;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    section.cover::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: repeating-linear-gradient(90deg,
+          var(--theme-color) 0px,
+          var(--theme-color) 10px,
+          var(--accent-color) 10px,
+          var(--accent-color) 20px);
+      animation: scan 2s linear infinite;
+    }
+
+    @keyframes scan {
+      0% {
+        transform: translateX(-20px);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    section.cover .cover-main {
+      margin: 0;
+      padding: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    section.cover .cover-main>p:first-child img {
+      max-width: 320px;
+      image-rendering: pixelated;
+      filter: drop-shadow(6px 6px 0 #000) drop-shadow(0 0 30px rgba(52, 211, 153, 0.4));
+      animation: float 3s ease-in-out infinite;
+      border: 4px solid var(--theme-color);
+      padding: 1rem;
+      background: rgba(10, 10, 10, 0.8);
+      box-shadow:
+        0 0 0 2px #000,
+        0 0 0 6px var(--theme-color),
+        8px 8px 0 0 #000;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    section.cover h1 {
+      font-family: 'Press Start 2P', cursive;
+      color: var(--theme-color);
+      text-shadow:
+        4px 4px 0 #000,
+        0 0 10px rgba(52, 211, 153, 0.5),
+        0 0 20px rgba(52, 211, 153, 0.3);
+      font-size: 2.5rem;
+      margin: 2rem 0;
+      animation: glow 2s ease-in-out infinite alternate;
+      position: relative;
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: rgba(10, 10, 10, 0.6);
+      border: 3px solid var(--theme-color);
+      box-shadow:
+        0 0 0 1px #000,
+        6px 6px 0 0 #000;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow:
+          4px 4px 0 #000,
+          0 0 10px rgba(52, 211, 153, 0.5),
+          0 0 20px rgba(52, 211, 153, 0.3);
+        box-shadow:
+          0 0 0 1px #000,
+          6px 6px 0 0 #000;
+      }
+
+      to {
+        text-shadow:
+          4px 4px 0 #000,
+          0 0 20px rgba(52, 211, 153, 0.8),
+          0 0 40px rgba(52, 211, 153, 0.5);
+        box-shadow:
+          0 0 0 1px #000,
+          6px 6px 0 0 #000,
+          0 0 30px rgba(52, 211, 153, 0.3);
+      }
+    }
+
+    section.cover h1 span {
+      color: var(--accent-color);
+    }
+
+    section.cover h1 small {
+      color: var(--accent-color);
+      font-size: 0.4em;
+      vertical-align: middle;
+    }
+
+    section.cover blockquote {
+      font-family: 'Courier New', monospace;
+      color: var(--base-color);
+      border-left: 4px solid var(--theme-color);
+      background: rgba(26, 26, 26, 0.8);
+      padding: 1rem 1.5rem;
+      box-shadow: 4px 4px 0 0 #000;
+      backdrop-filter: blur(10px);
+      font-size: 1.1rem;
+    }
+
+    section.cover ul {
+      list-style: none;
+      padding: 0;
+      margin: 2rem 0;
+    }
+
+    section.cover ul li {
+      font-family: 'Courier New', monospace;
+      color: var(--base-color);
+      padding: 0.5rem 0;
+      font-size: 1rem;
+    }
+
+    section.cover .cover-main>p:last-child a {
+      background: var(--theme-color);
+      color: #000;
+      border: 4px solid #000;
+      padding: 1rem 2.5rem;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.7rem;
+      text-decoration: none;
+      display: inline-block;
+      margin: 0.5rem;
+      box-shadow:
+        0 0 0 2px var(--theme-color),
+        6px 6px 0 0 #000;
+      transition: all 0.1s;
+      position: relative;
+      text-transform: uppercase;
+    }
+
+    section.cover .cover-main>p:last-child a::before {
+      content: '▶';
+      margin-right: 0.5rem;
+      animation: blink 1s step-end infinite;
+    }
+
+    section.cover .cover-main>p:last-child a:hover {
+      background: var(--accent-color);
+      transform: translate(3px, 3px);
+      box-shadow:
+        0 0 0 2px var(--accent-color),
+        3px 3px 0 0 #000;
+    }
+
+    section.cover .cover-main>p:last-child a:last-child {
+      background: transparent;
+      color: var(--theme-color);
+      border: 4px solid var(--theme-color);
+      box-shadow:
+        0 0 0 2px #000,
+        6px 6px 0 0 #000;
+    }
+
+    section.cover .cover-main>p:last-child a:last-child::before {
+      content: '★';
+    }
+
+    section.cover .cover-main>p:last-child a:last-child:hover {
+      background: var(--theme-color);
+      color: #000;
+      box-shadow:
+        0 0 0 2px var(--theme-color),
+        3px 3px 0 0 #000;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">加载中...</div>
+  <script>
+    window.$docsify = {
+      name: 'Script Graph',
+      repo: 'https://github.com/qq865738120/script_graph_docs',
+      loadSidebar: true,
+      subMaxLevel: 2,
+      auto2top: true,
+      homepage: 'README.md',
+      coverpage: true,
+      onlyCover: false,
+
+      // 搜索配置
+      search: {
+        maxAge: 86400000,
+        paths: 'auto',
+        placeholder: '搜索文档...',
+        noData: '没有找到结果',
+        depth: 4,
+        hideOtherSidebarContent: false
+      },
+
+      // 复制代码配置
+      copyCode: {
+        buttonText: 'COPY',
+        errorText: 'ERROR',
+        successText: 'OK!'
+      },
+
+      // 分页导航
+      pagination: {
+        previousText: '< PREV',
+        nextText: 'NEXT >',
+        crossChapter: true,
+        crossChapterText: true
+      }
+    }
+  </script>
+
+  <!-- Docsify 核心 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+
+  <!-- 搜索插件 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+
+  <!-- 复制代码插件 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code@2"></script>
+
+  <!-- 分页导航插件 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-pagination@2/dist/docsify-pagination.min.js"></script>
+
+  <!-- 代码高亮 -->
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-typescript.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-javascript.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+</body>
+
+</html>

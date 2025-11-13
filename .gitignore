@@ -1,0 +1,23 @@
+# Cloudflare
+.wrangler/
+wrangler.toml.bak
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 日志
+*.log
+npm-debug.log*
+
+# 临时文件
+*.tmp
+*.temp
+

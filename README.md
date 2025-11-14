@@ -15,7 +15,7 @@ Script Graph（脚本图编辑器）是一款基于节点连线的可视化脚�
 
 ## 日志
 
--   [开发日志](./changelog/README.md)
+-   [开发日志](changelog/README.md)
 
 ## 快速开始
 

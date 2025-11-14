@@ -1,0 +1,17 @@
+/*
+  # 启用 CORS
+  Access-Control-Allow-Origin: *
+  
+  # 缓存控制 - 允许浏览器缓存静态资源，但总是验证
+  Cache-Control: public, max-age=3600, must-revalidate
+  
+  # 保留 Last-Modified 头以便 docsify 获取文件更新时间
+  X-Content-Type-Options: nosniff
+
+/*.md
+  # Markdown 文件不缓存，确保总是获取最新版本
+  Cache-Control: no-cache, no-store, must-revalidate
+  
+/*.html
+  # HTML 文件不缓存
+  Cache-Control: no-cache, no-store, must-revalidate

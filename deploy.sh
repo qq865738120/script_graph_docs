@@ -25,10 +25,16 @@ cd "$(dirname "$0")"
 
 echo "📦 准备部署文件..."
 
+# 更新所有 .md 文件的修改时间为当前时间
+# 这样 docsify 的 formatUpdated 就能显示正确的更新时间
+echo "🕒 更新文件时间戳..."
+find . -name "*.md" -type f -exec touch {} \;
+
 # 部署到 Cloudflare Pages
 echo "🌐 部署到 Cloudflare Pages..."
 wrangler pages deploy . --project-name=script-graph-docs
 
 echo "✅ 部署完成！"
 echo "📖 访问文档: https://script-graph-docs.pages.dev"
+echo "🌍 自定义域名: https://www.scriptgraph.cc/"
 

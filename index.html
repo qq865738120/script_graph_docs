@@ -204,23 +204,32 @@
       border: 0;
       border-radius: 4px;
       box-shadow: 2px 2px 0 0 #000;
-      padding: 6px;
+      padding: 10px;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
+      cursor: url('images/cusor-pointer.png'), pointer !important;
+      position: relative;
     }
 
     .sidebar-toggle span {
-      display: inline-block;
-      width: 16px;
-      height: 16px;
+      display: inline-block !important;
+      width: 20px;
+      height: 20px;
       margin: 0;
       background: url('images/list-icon.svg') center center / contain no-repeat;
       filter: brightness(0) saturate(100%) invert(73%) sepia(48%) saturate(449%) hue-rotate(99deg) brightness(95%) contrast(89%);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
 
-    .sidebar-toggle span:nth-child(n+2) {
-      display: none;
+    .sidebar-toggle span:nth-child(2),
+    .sidebar-toggle span:nth-child(3) {
+      display: none !important;
     }
 
     .sidebar-toggle:hover {
@@ -394,7 +403,6 @@
 
     .markdown-section h2 {
       color: var(--accent-color);
-      border-bottom: 2px solid var(--accent-color);
       padding-bottom: 0.3rem;
       text-shadow: 1px 1px 0 #000;
       font-family: 'Ark Pixel 12px', 'Ark Pixel 12px Latin', 'Courier New', monospace;
@@ -513,11 +521,11 @@
     .markdown-section blockquote::before {
       content: '';
       display: block;
-      width: 20px;
-      height: 20px;
+      width: 12px;
+      height: 12px;
       background: url('images/gem-icon.svg') center center / contain no-repeat;
       position: absolute;
-      top: 2.3rem;
+      top: 2.7rem;
       left: 0.8rem;
       filter: brightness(0) saturate(100%) invert(64%) sepia(98%) saturate(1173%) hue-rotate(189deg) brightness(103%) contrast(96%);
     }
@@ -1237,6 +1245,9 @@
       homepage: 'README.md',
       coverpage: true,
       onlyCover: false,
+      alias: {
+        '/.*/_sidebar.md': '/_sidebar.md'  // 所有页面使用根目录的 _sidebar.md
+      },
 
       // 搜索配置
       search: {
@@ -1312,12 +1323,8 @@
         height: "4px",
       },
 
-      // 更新时间配置
-      timeUpdater: {
-        text: ">最后更新时间: {docsify-updated}",
-        formatUpdated: "{YYYY}/{MM}/{DD}",
-        whereToPlace: "bottom",  // "top" or "bottom", default to "bottom"
-      },
+      // 更新时间配置 - 使用文件修改时间而不是 git 历史
+      formatUpdated: '{YYYY}/{MM}/{DD} {HH}:{mm}',
 
       // 开启busuanzi网站访问量统计
       busuanzi: true,
@@ -1372,11 +1379,18 @@
   <!-- 进度条插件 -->
   <script src="//cdn.jsdelivr.net/npm/docsify-progress@latest/dist/progress.min.js"></script>
 
-  <!-- 更新时间插件 -->
-  <script src="//cdn.jsdelivr.net/npm/docsify-updated/src/time-updater.js"></script>
-
   <!-- 访问量统计 -->
   <script src="//unpkg.com/docsify-busuanzi@1.0.1/dist/docsify-busuanzi.min.js"></script>
+
+  <!-- 自定义页脚 - 显示文档更新时间 -->
+  <script>
+    window.$docsify.plugins = (window.$docsify.plugins || []).concat(function (hook, vm) {
+      hook.beforeEach(function (content) {
+        // 添加更新时间占位符
+        return content + '\n\n---\n\n> 📅 最后更新时间: {docsify-updated}';
+      });
+    });
+  </script>
 
   <!-- Bilibili 视频嵌入 -->
   <script src="//cdn.jsdelivr.net/npm/docsify-bilibili@latest/bilibili.min.js"></script>

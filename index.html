@@ -15,6 +15,9 @@
   <!-- 暗黑主题 -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css">
 
+  <!-- Top Banner 插件样式 -->
+  <link rel="stylesheet" href="./docsify-top-banner-custom.css">
+
   <!-- 像素字体（本地 Ark Pixel，预加载确保首屏可用） -->
   <link rel="preload"
     href="fonts/ark-pixel-font-12px-proportional-ttf.woff2-v2025.10.20/ark-pixel-12px-proportional-zh_cn.ttf.woff2"
@@ -1178,23 +1181,55 @@
 
       // 复制代码配置
       copyCode: {
-        buttonText: 'COPY',
-        errorText: 'ERROR',
-        successText: 'OK!'
+        buttonText: '复制代码',
+        errorText: '复制失败',
+        successText: '复制成功!'
       },
 
       // 分页导航
       pagination: {
-        previousText: '< PREV',
-        nextText: 'NEXT >',
+        previousText: '上一页',
+        nextText: '下一页',
         crossChapter: true,
         crossChapterText: true
+      },
+
+      // 字数统计
+      count: {
+        countable: true,
+        wordCount: true,
+        readingTime: true,
+        language: 'chinese',
+        exclude: {
+          className: ['no-count']
+        }
+      },
+
+      // 术语表（docsify-glossary 插件）
+      glossify: {
+        glossaryLocation: '_glossary.md',
+        terminologyHeading: '####',
+        replaceTitleTerms: false,
+        debug: false
+      },
+
+      // 顶部横幅配置
+      topBanner: {
+        content: '🎮 **新版本发布！** Script Graph v1.0 现已支持更多节点类型和工作流功能。[查看更新日志](#) 或 [立即体验](#)',
+        position: 'fixed',
+        zIndex: '9999',
+        textAlign: 'center',
+        closeable: true,
+        autoCloseDuration: 8000  // 8秒后自动关闭
       }
     }
   </script>
 
   <!-- Docsify 核心 -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+
+  <!-- 术语表（docsify-glossary）插件 -->
+  <script src="./docsify-glossary.min.js"></script>
 
   <!-- 搜索插件 -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
@@ -1210,6 +1245,15 @@
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-javascript.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+
+  <!-- 图片缩放 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+
+  <!-- 字数统计 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-count@latest/dist/countable.min.js"></script>
+
+  <!-- Top Banner 插件 -->
+  <script src="./docsify-top-banner-custom.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,164 @@
+/**
+ * docsify-top-banner-plugin 像素风样式
+ * 与 Script Graph 项目整体风格统一
+ */
+
+/* Banner 容器 */
+.pixel-top-banner {
+  width: 100%;
+  padding: 0.4rem 2.5rem 0.4rem 1rem;
+  background: linear-gradient(90deg,
+      rgba(52, 211, 153, 0.15) 0%,
+      rgba(96, 165, 250, 0.15) 100%);
+  border-bottom: 2px solid var(--theme-color, #34d399);
+  box-shadow:
+    0 0 0 1px #000,
+    0 2px 0 0 #000,
+    inset 0 -1px 0 0 rgba(0, 0, 0, 0.3);
+  font-family: 'Ark Pixel 12px', 'Ark Pixel 12px Latin', 'Courier New', monospace;
+  font-size: 0.85rem;
+  color: var(--base-color, #e0e0e0);
+  line-height: 1.4;
+  letter-spacing: 0.03em;
+  position: relative;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  /* 像素化渲染 */
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+
+  /* 禁用字体平滑 */
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: auto;
+  font-smooth: never;
+  text-rendering: optimizeSpeed;
+
+  /* 网格背景 */
+  background-image:
+    linear-gradient(90deg,
+      rgba(52, 211, 153, 0.15) 0%,
+      rgba(96, 165, 250, 0.15) 100%),
+    repeating-linear-gradient(0deg,
+      transparent,
+      transparent 9px,
+      rgba(52, 211, 153, 0.03) 9px,
+      rgba(52, 211, 153, 0.03) 10px),
+    repeating-linear-gradient(90deg,
+      transparent,
+      transparent 9px,
+      rgba(52, 211, 153, 0.03) 9px,
+      rgba(52, 211, 153, 0.03) 10px);
+
+  /* 入场动画 */
+  animation: bannerSlideDown 0.4s ease-out;
+}
+
+/* 像素风鼠标指针 */
+.pixel-top-banner,
+.pixel-top-banner * {
+  cursor: url('images/cusor.png'), auto;
+}
+
+.pixel-top-banner a,
+.pixel-top-banner button {
+  cursor: url('images/cusor-pointer.png'), pointer;
+}
+
+/* Banner 内链接样式 */
+.pixel-top-banner a {
+  color: var(--accent-color, #60a5fa);
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0.2rem 0.5rem;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  position: relative;
+  text-shadow: 1px 1px 0 #000;
+}
+
+.pixel-top-banner a:hover {
+  color: var(--theme-color, #34d399);
+  border-bottom-color: var(--theme-color, #34d399);
+  text-shadow:
+    1px 1px 0 #000,
+    0 0 8px rgba(52, 211, 153, 0.6);
+}
+
+/* 关闭按钮 */
+.pixel-banner-close {
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  transform: translateY(-50%);
+  background: rgba(10, 10, 10, 0.8);
+  border: 2px solid var(--theme-color, #34d399);
+  color: var(--theme-color, #34d399);
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 0;
+  transition: all 0.2s;
+  box-shadow: 1px 1px 0 0 #000;
+  font-family: 'Ark Pixel 12px', 'Ark Pixel 12px Latin', 'Courier New', monospace;
+  line-height: 1;
+}
+
+.pixel-banner-close:hover {
+  background: var(--theme-color, #34d399);
+  color: #000;
+  box-shadow: 1px 1px 0 0 #000;
+  transform: translateY(-50%) translate(1px, 1px);
+}
+
+.pixel-banner-close:active {
+  box-shadow: 0 0 0 0 #000;
+  transform: translateY(-50%) translate(2px, 2px);
+}
+
+/* 动画定义 */
+@keyframes bannerSlideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bannerFadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .pixel-top-banner {
+    padding: 0.3rem 2rem 0.3rem 0.8rem;
+    font-size: 0.75rem;
+  }
+
+  .pixel-banner-close {
+    right: 0.3rem;
+    width: 18px;
+    height: 18px;
+    font-size: 0.65rem;
+  }
+}

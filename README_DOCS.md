@@ -53,7 +53,6 @@ packages/docs/
 ├── wrangler.toml       # Cloudflare Pages 配置
 ├── deploy.sh           # 部署脚本
 ├── images/             # 静态资源目录
-│   └── logo.png       # 项目 logo
 ├── advanced/           # 高级主题（空）
 ├── dev/               # 开发文档（空）
 ├── guide/             # 用户指南（空）

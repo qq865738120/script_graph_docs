@@ -1,4 +1,4 @@
-![logo](images/logo.png)
+![logo](images/logo.webp)
 
 # Script Graph <small>v1.0</small>
 

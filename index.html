@@ -14,7 +14,7 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Script Graph 脚本图编辑器文档">
   <meta property="og:description" content="Script Graph 脚本图编辑器 - Cocos Creator 可视化脚本编辑插件">
-  <meta property="og:image" content="images/logo.png">
+  <meta property="og:image" content="images/logo.ico">
   <meta property="og:url" content="https://www.scriptgraph.cc/">
 
   <!-- Canonical URL：告诉搜索引擎此页面的标准地址，避免权重分散 -->
@@ -39,8 +39,8 @@
 
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="images/logo.png">
-  <link rel="shortcut icon" type="image/png" href="images/logo.png">
+  <link rel="icon" type="image/x-icon" href="images/logo.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="images/logo.ico">
 
   <!-- 暗黑主题 -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css">
@@ -186,6 +186,10 @@
       }
     }
 
+    .github-corner {
+      z-index: 2;
+    }
+
     .sidebar {
       padding-top: 2px !important;
       background-color: var(--sidebar-background);
@@ -242,7 +246,7 @@
       display: inline-block;
       width: 30px;
       height: 30px;
-      background: url('images/logo.png') center center / contain no-repeat;
+      background: url('images/logo.webp') center center / contain no-repeat;
       margin-right: 0.8rem;
       transform: translateY(-4px);
       vertical-align: middle;
@@ -1229,7 +1233,7 @@
       repo: 'https://github.com/qq865738120/script_graph_docs',
       loadSidebar: true,
       subMaxLevel: 2,
-      auto2top: true,
+      auto2top: false,
       homepage: 'README.md',
       coverpage: true,
       onlyCover: false,

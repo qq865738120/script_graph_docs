@@ -7,6 +7,36 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="Script Graph 脚本图编辑器 - Cocos Creator 可视化脚本编辑插件">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#0a0a0a">
+
+  <!-- Open Graph 基础信息，提升分享效果和搜索引擎理解 -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Script Graph 脚本图编辑器文档">
+  <meta property="og:description" content="Script Graph 脚本图编辑器 - Cocos Creator 可视化脚本编辑插件">
+  <meta property="og:image" content="images/logo.png">
+  <meta property="og:url" content="https://www.scriptgraph.cc/">
+
+  <!-- Canonical URL：告诉搜索引擎此页面的标准地址，避免权重分散 -->
+  <link rel="canonical" href="https://www.scriptgraph.cc/">
+
+  <!-- 预连接常用静态资源域名，降低首包延迟 -->
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="dns-prefetch" href="//unpkg.com">
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+
+  <!-- 百度统计 -->
+  <script>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d390652d6953b4e308551961f97751e8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="images/logo.png">
@@ -17,6 +47,9 @@
 
   <!-- Top Banner 插件样式 -->
   <link rel="stylesheet" href="./docsify-top-banner-custom.css">
+
+  <!-- 字体大小控制插件样式 -->
+  <link rel="stylesheet" href="./docsify-fontsize.css">
 
   <!-- 像素字体（本地 Ark Pixel，预加载确保首屏可用） -->
   <link rel="preload"
@@ -324,7 +357,7 @@
       border-bottom: 3px solid var(--theme-color);
       padding-bottom: 0.5rem;
       font-family: 'Ark Pixel 12px', 'Ark Pixel 12px Latin', 'Courier New', monospace;
-      font-size: 1.8rem;
+      font-size: 1.8em;
       letter-spacing: 0.08em;
       position: relative;
       padding-left: 1rem;
@@ -361,7 +394,7 @@
       padding-bottom: 0.3rem;
       text-shadow: 1px 1px 0 #000;
       font-family: 'Ark Pixel 12px', 'Ark Pixel 12px Latin', 'Courier New', monospace;
-      font-size: 1.4rem;
+      font-size: 1.4em;
       letter-spacing: 0.06em;
       position: relative;
       padding-left: 1rem;
@@ -383,7 +416,7 @@
     .markdown-section h3 {
       color: var(--theme-color-light);
       font-family: 'Ark Pixel 12px', 'Ark Pixel 12px Latin', 'Courier New', monospace;
-      font-size: 1.1rem;
+      font-size: 1.1em;
       letter-spacing: 0.04em;
       position: relative;
       padding-left: 1rem;
@@ -461,6 +494,7 @@
           transparent 19px,
           rgba(52, 211, 153, 0.02) 19px,
           rgba(52, 211, 153, 0.02) 20px);
+      line-height: 1.5;
     }
 
     .markdown-section blockquote {
@@ -487,6 +521,12 @@
     .markdown-section ul,
     .markdown-section ol {
       padding-left: 2rem;
+    }
+
+    .markdown-section p,
+    .markdown-section ul,
+    .markdown-section ol {
+      line-height: 1.6;
     }
 
     .markdown-section li {
@@ -639,6 +679,8 @@
     .markdown-section img {
       image-rendering: pixelated;
       max-width: 100%;
+      height: auto;
+      display: block;
       margin: 1rem 0;
       padding: 0.5rem;
     }
@@ -1018,12 +1060,35 @@
       background: linear-gradient(90deg, var(--theme-color), var(--theme-color-light));
       border-radius: 0;
       border: 3px solid #000;
-      box-shadow:
-        0 0 0 2px var(--theme-color-dark),
+
+      /* 1 8e 83 96 90 9c 53 81 8f 84 51 8b 4f 85 89 5f 81 8e 9f 55 5f 7b 5f 9e 93 74 65 5f 80 05 8c a4 7a 7f 87 0e 7e 07 96 62 87 01 92 70 6chez 79 8f 80 95 58 8b 0c 8f 0e 83 95 9e 09 86 7c 86 97 97  */
+      box-shadow: 0 0 0 2px var(--theme-color-dark),
         6px 6px 0 0 #000;
       text-decoration: none;
       margin: 0.5rem;
       overflow: hidden;
+    }
+
+    /* 移动端优化：减少封面区域的视觉复杂度，避免遮挡正文 */
+    @media (max-width: 768px) {
+      section.cover {
+        padding: 2.5rem 1.5rem;
+        background-position: center top !important;
+        box-shadow: none;
+      }
+
+      section.cover .cover-main>p:first-child img {
+        max-width: 260px;
+      }
+
+      section.cover h1 {
+        font-size: 2rem;
+        margin: 1.5rem 0;
+      }
+
+      section.cover blockquote {
+        font-size: 0.95rem;
+      }
     }
 
     section.cover .cover-main>p:last-child a::before {
@@ -1221,7 +1286,46 @@
         textAlign: 'center',
         closeable: true,
         autoCloseDuration: 8000  // 8秒后自动关闭
-      }
+      },
+
+      // 自动标题配置
+      autoHeaders: {
+        // Separator for header numbering (e.g., '.', '-', ')')
+        separator: '.',
+        // Boolean indicating if headers should be added to the sidebar
+        sidebar: false,
+        // Number of header levels to include (1 to 6) or an object with start and finish properties
+        levels: 6,
+        // levels: { start: 1, finish: 6 }
+        // Boolean to enable or disable debug messages
+        debug: false
+      },
+
+      // 进度条配置
+      progress: {
+        position: "top",
+        color: "var(--theme-color-light, --theme-color)",
+        height: "4px",
+      },
+
+      // 更新时间配置
+      timeUpdater: {
+        text: ">最后更新时间: {docsify-updated}",
+        formatUpdated: "{YYYY}/{MM}/{DD}",
+        whereToPlace: "bottom",  // "top" or "bottom", default to "bottom"
+      },
+
+      // 开启busuanzi网站访问量统计
+      busuanzi: true,
+
+      // 字体大小控制配置
+      fontsize: {
+        defaultSize: 16,
+        minSize: 12,
+        maxSize: 24,
+        step: 1,
+        storageKey: 'docsify-fontsize'
+      },
     }
   </script>
 
@@ -1254,6 +1358,24 @@
 
   <!-- Top Banner 插件 -->
   <script src="./docsify-top-banner-custom.js"></script>
+
+  <!-- 字体大小控制插件 -->
+  <script src="./docsify-fontsize.js"></script>
+
+  <!-- 自动标题插件 -->
+  <script src="//cdn.jsdelivr.net/npm/@markbattistella/docsify-autoheaders@latest"></script>
+
+  <!-- 进度条插件 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-progress@latest/dist/progress.min.js"></script>
+
+  <!-- 更新时间插件 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-updated/src/time-updater.js"></script>
+
+  <!-- 访问量统计 -->
+  <script src="//unpkg.com/docsify-busuanzi@1.0.1/dist/docsify-busuanzi.min.js"></script>
+
+  <!-- Bilibili 视频嵌入 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-bilibili@latest/bilibili.min.js"></script>
 </body>
 
 </html>

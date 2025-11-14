@@ -1,6 +1,6 @@
 # Script Graph
 
-> 一款专为 Cocos Creator 设计的可视化脚本编辑插件
+> 一款专为 [Cocos Creator](https://www.cocos.com/creator) 设计的可视化脚本编辑插件
 
 ## 简介
 

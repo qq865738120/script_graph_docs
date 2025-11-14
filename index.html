@@ -83,9 +83,9 @@
       background-color: var(--base-background-color);
       color: var(--base-color);
       font-family: 'Ark Pixel 12px', 'Ark Pixel 12px Latin', 'Courier New', monospace;
-      font-size: 15px;
-      line-height: 1.7;
-      letter-spacing: 0.03em;
+      font-size: 16px;
+      line-height: 1.85;
+      letter-spacing: 0.05em;
       -webkit-font-smoothing: none;
       -moz-osx-font-smoothing: auto;
       font-smooth: never;
@@ -151,37 +151,12 @@
     }
 
     .sidebar {
+      padding-top: 2px !important;
       background-color: var(--sidebar-background);
-      border-right: 5px solid var(--sidebar-border-color);
+      border-right: 4px solid var(--sidebar-border-color);
       box-shadow:
         inset -2px 0 0 0 var(--theme-color),
         5px 0 0 0 #000;
-      background-image:
-        repeating-linear-gradient(0deg,
-          transparent,
-          transparent 39px,
-          rgba(52, 211, 153, 0.03) 39px,
-          rgba(52, 211, 153, 0.03) 40px);
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-    }
-
-    /* 侧边栏顶部装饰 */
-    .sidebar::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: repeating-linear-gradient(90deg,
-          var(--theme-color) 0px,
-          var(--theme-color) 10px,
-          var(--accent-color) 10px,
-          var(--accent-color) 20px);
-      z-index: 10;
     }
 
     .sidebar-toggle {
@@ -229,10 +204,11 @@
     .app-name::before {
       content: '';
       display: inline-block;
-      width: 20px;
-      height: 20px;
+      width: 30px;
+      height: 30px;
       background: url('images/logo.png') center center / contain no-repeat;
-      margin-right: 0.5rem;
+      margin-right: 0.8rem;
+      transform: translateY(-4px);
       vertical-align: middle;
       filter: drop-shadow(2px 2px 0 #000);
     }
@@ -395,7 +371,7 @@
       height: 16px;
       background: url('images/gem-icon.svg') center center / contain no-repeat;
       position: absolute;
-      left: -2px;
+      left: -0.5rem;
       top: 50%;
       transform: translateY(-50%);
       filter: brightness(0) saturate(100%) invert(73%) sepia(48%) saturate(449%) hue-rotate(99deg) brightness(95%) contrast(89%);
@@ -430,6 +406,11 @@
       position: relative;
     }
 
+    a,
+    a:hover {
+      text-decoration: none !important;
+    }
+
     /* 强调文本样式 */
     .markdown-section strong {
       color: var(--theme-color);
@@ -447,19 +428,21 @@
 
     .markdown-section code {
       background-color: #1a1a1a;
-      border: 2px solid var(--theme-color);
+      border: 1px solid var(--theme-color);
+      border-radius: 0.25rem !important;
       padding: 3px 8px;
-      font-family: 'Courier New', monospace;
+      font-family: 'Roboto Mono,Monaco,courier,monospace', monospace;
       color: var(--accent-color);
       border-radius: 0;
-      font-size: 0.9em;
+      font-size: 0.9em !important;
       box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.5);
     }
 
     .markdown-section pre>code {
       background-color: #1a1a1a;
       color: var(--base-color);
-      border: 2px solid var(--theme-color);
+      border: none;
+      box-shadow: none;
     }
 
     .markdown-section pre {
@@ -475,32 +458,6 @@
           transparent 19px,
           rgba(52, 211, 153, 0.02) 19px,
           rgba(52, 211, 153, 0.02) 20px);
-    }
-
-    .markdown-section pre::before {
-      content: '';
-      position: absolute;
-      top: -3px;
-      right: 10px;
-      width: 24px;
-      height: 24px;
-      background: var(--theme-color) url('images/book.svg') center center / 16px 16px no-repeat;
-      border: 3px solid #000;
-      box-shadow: 3px 3px 0 0 rgba(0, 0, 0, 0.5);
-    }
-
-    .markdown-section pre::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: repeating-linear-gradient(90deg,
-          var(--theme-color) 0px,
-          var(--theme-color) 4px,
-          transparent 4px,
-          transparent 8px);
     }
 
     .markdown-section blockquote {
@@ -519,7 +476,7 @@
       height: 20px;
       background: url('images/gem-icon.svg') center center / contain no-repeat;
       position: absolute;
-      top: 1rem;
+      top: 2.3rem;
       left: 0.8rem;
       filter: brightness(0) saturate(100%) invert(64%) sepia(98%) saturate(1173%) hue-rotate(189deg) brightness(103%) contrast(96%);
     }
@@ -554,6 +511,52 @@
     .markdown-section ol li::marker {
       color: var(--accent-color);
       font-weight: bold;
+    }
+
+    /* GitHub 任务列表样式 */
+    .markdown-section .task-list-item {
+      list-style: none;
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .markdown-section .task-list-item::before {
+      display: none !important;
+    }
+
+    .markdown-section .task-list-item input[type="checkbox"] {
+      position: absolute !important;
+      left: 0.3rem;
+      top: 0.4rem;
+      width: 16px;
+      height: 16px;
+      margin: 0;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-color: #1a1a1a;
+      border: 3px solid var(--theme-color);
+      transition: all 0.2s;
+      image-rendering: pixelated;
+      box-shadow: 2px 2px 0 0 #000;
+    }
+
+    .markdown-section .task-list-item input[type="checkbox"]:checked {
+      background-color: var(--theme-color);
+      border-color: var(--theme-color);
+      position: relative;
+    }
+
+    .markdown-section .task-list-item input[type="checkbox"]:checked::after {
+      content: '';
+      position: absolute;
+      left: 1px;
+      top: -1px;
+      width: 6px;
+      height: 10px;
+      border: solid #000;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
     }
 
     .markdown-section table {
@@ -631,14 +634,9 @@
 
     /* 图片样式 */
     .markdown-section img {
-      border: 4px solid var(--theme-color);
-      box-shadow:
-        0 0 0 2px #000,
-        6px 6px 0 0 #000;
       image-rendering: pixelated;
       max-width: 100%;
       margin: 1rem 0;
-      background: rgba(10, 10, 10, 0.5);
       padding: 0.5rem;
     }
 
@@ -695,14 +693,16 @@
     .markdown-section .tip::before,
     .markdown-section .warn::before,
     .markdown-section .danger::before {
+      background-color: transparent !important;
+
       content: '';
       display: block;
       width: 20px;
       height: 20px;
       background: url('images/gem-icon.svg') center center / contain no-repeat;
       position: absolute;
-      left: 1rem;
-      top: 1rem;
+      left: 1rem !important;
+      top: 1.2rem !important;
       filter: brightness(0) saturate(100%) invert(73%) sepia(48%) saturate(449%) hue-rotate(99deg) brightness(95%) contrast(89%);
     }
 
@@ -731,7 +731,7 @@
       background-color: #1a1a1a;
       border: 4px solid var(--theme-color);
       color: var(--base-color);
-      font-family: 'Courier New', monospace;
+      font-family: 'Ark Pixel 12px', 'Ark Pixel 12px Latin', 'Courier New', monospace;
       border-radius: 4px;
       padding: 0.8rem 1rem;
       box-shadow:
@@ -786,16 +786,15 @@
       display: inline-block;
       width: 12px;
       height: 12px;
-      background: url('images/banner-icon.svg') center center / contain no-repeat;
+      background: var(--theme-color) url('images/book.svg') center center / 12px 12px no-repeat;
       margin-right: 4px;
+      transform: translateY(-1px);
       vertical-align: middle;
-      filter: brightness(0) invert(1);
     }
 
     .docsify-copy-code-button:hover {
       background: var(--accent-color) !important;
       box-shadow: 2px 2px 0 0 #000 !important;
-      transform: translate(1px, 1px);
     }
 
     /* 封面样式 */
@@ -865,7 +864,7 @@
     }
 
     section.cover .cover-main>p:first-child img {
-      max-width: 320px;
+      max-width: 360px;
       image-rendering: pixelated;
       filter: drop-shadow(6px 6px 0 #000) drop-shadow(0 0 30px rgba(52, 211, 153, 0.4));
       animation: float 3s ease-in-out infinite;
@@ -892,8 +891,8 @@
       animation: glow 2s ease-in-out infinite alternate;
       position: relative;
       display: inline-block;
-      padding: 1rem 2rem 1rem 3rem;
-      background: rgba(10, 10, 10, 0.8);
+      padding: 1rem 2rem 1rem 3.5rem;
+      background: rgba(10, 10, 10, 0.7);
       border: 3px solid var(--theme-color);
       box-shadow:
         0 0 0 1px #000,
@@ -907,8 +906,8 @@
       height: 32px;
       background: url('images/trophy-icon.svg') center center / contain no-repeat;
       position: absolute;
-      left: 0.5rem;
-      top: 50%;
+      left: 0.8rem;
+      top: 51%;
       transform: translateY(-50%);
       filter: drop-shadow(2px 2px 0 #000);
     }
@@ -937,13 +936,14 @@
     }
 
     section.cover h1 span {
-      color: var(--accent-color);
+      color: var(--theme-color-light);
     }
 
     section.cover h1 small {
-      color: var(--accent-color);
+      color: var(--theme-color-dark);
       font-size: 0.4em;
       vertical-align: middle;
+      bottom: -.4rem;
     }
 
     section.cover blockquote {
@@ -996,75 +996,44 @@
       filter: drop-shadow(1px 1px 0 #000);
     }
 
+    section.cover .cover-main>p:last-child {
+      margin-top: 2.5rem;
+    }
+
     section.cover .cover-main>p:last-child a {
-      background: var(--theme-color);
-      color: #000;
-      border: 4px solid #000;
-      padding: 1rem 2.5rem;
-      font-family: 'Ark Pixel 12px', 'Ark Pixel 12px Latin', 'Courier New', monospace;
-      font-size: 0.7rem;
-      text-decoration: none;
-      display: inline-block;
-      margin: 0.5rem;
-      box-shadow:
-        0 0 0 2px var(--theme-color),
-        6px 6px 0 0 #000;
-      transition: all 0.1s;
       position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 1.1rem 3rem;
+      font-family: 'Ark Pixel 12px', 'Ark Pixel 12px Latin', 'Courier New', monospace;
+      font-size: 1rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      border-radius: 4px;
+      color: #000 !important;
+      background: linear-gradient(90deg, var(--theme-color), var(--theme-color-light));
+      border-radius: 0;
+      border: 3px solid #000;
+      box-shadow:
+        0 0 0 2px var(--theme-color-dark),
+        6px 6px 0 0 #000;
+      text-decoration: none;
+      margin: 0.5rem;
+      overflow: hidden;
     }
 
     section.cover .cover-main>p:last-child a::before {
       content: '';
       display: inline-block;
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
       background: url('images/right-arrow.svg') center center / contain no-repeat;
-      margin-right: 0.5rem;
-      vertical-align: middle;
-      filter: brightness(0) invert(1);
-      animation: blink 1s step-end infinite;
+      filter: brightness(0);
     }
 
-    section.cover .cover-main>p:last-child a:hover {
-      background: var(--accent-color);
-      transform: translate(3px, 3px);
-      box-shadow:
-        0 0 0 2px var(--accent-color),
-        3px 3px 0 0 #000;
-    }
-
-    section.cover .cover-main>p:last-child a:last-child {
-      background: transparent;
-      color: var(--theme-color);
-      border: 4px solid var(--theme-color);
-      box-shadow:
-        0 0 0 2px #000,
-        6px 6px 0 0 #000;
-    }
-
-    section.cover .cover-main>p:last-child a:last-child::before {
-      content: '';
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      background: url('images/star.svg') center center / contain no-repeat;
-      margin-right: 0.5rem;
-      vertical-align: middle;
-      filter: brightness(0) saturate(100%) invert(73%) sepia(48%) saturate(449%) hue-rotate(99deg) brightness(95%) contrast(89%);
-    }
-
-    section.cover .cover-main>p:last-child a:last-child:hover {
-      background: var(--theme-color);
-      color: #000;
-      box-shadow:
-        0 0 0 2px var(--theme-color),
-        3px 3px 0 0 #000;
-    }
-
-    section.cover .cover-main>p:last-child a:last-child:hover::before {
-      filter: brightness(0) invert(1);
+    .search {
+      border-bottom: none !important;
     }
 
     /* 搜索框样式 */
@@ -1146,7 +1115,6 @@
     /* 使用 border.svg 组装像素边框 */
     .markdown-section pre,
     .markdown-section table,
-    .markdown-section img,
     .markdown-section blockquote,
     .markdown-section .tip,
     .markdown-section .warn,

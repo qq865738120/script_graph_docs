@@ -15,13 +15,41 @@
   <!-- 暗黑主题 -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css">
 
-  <!-- 像素字体 -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <!-- 像素字体（本地 Ark Pixel，预加载确保首屏可用） -->
+  <link rel="preload"
+    href="fonts/ark-pixel-font-12px-proportional-ttf.woff2-v2025.10.20/ark-pixel-12px-proportional-zh_cn.ttf.woff2"
+    as="font" type="font/woff2" crossorigin>
+  <link rel="preload"
+    href="fonts/ark-pixel-font-12px-proportional-ttf.woff2-v2025.10.20/ark-pixel-12px-proportional-latin.ttf.woff2"
+    as="font" type="font/woff2" crossorigin>
+  <link rel="preload"
+    href="fonts/ark-pixel-font-12px-proportional-ttf.woff-v2025.10.20/ark-pixel-12px-proportional-zh_cn.ttf.woff"
+    as="font" type="font/woff" crossorigin>
+  <link rel="preload"
+    href="fonts/ark-pixel-font-12px-proportional-ttf.woff-v2025.10.20/ark-pixel-12px-proportional-latin.ttf.woff"
+    as="font" type="font/woff" crossorigin>
 
   <!-- 自定义像素风样式 -->
   <style>
+    /* Ark Pixel 像素字体配置 */
+    @font-face {
+      font-family: 'Ark Pixel 12px';
+      src: url('fonts/ark-pixel-font-12px-proportional-ttf.woff2-v2025.10.20/ark-pixel-12px-proportional-zh_cn.ttf.woff2') format('woff2'),
+        url('fonts/ark-pixel-font-12px-proportional-ttf.woff-v2025.10.20/ark-pixel-12px-proportional-zh_cn.ttf.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Ark Pixel 12px Latin';
+      src: url('fonts/ark-pixel-font-12px-proportional-ttf.woff2-v2025.10.20/ark-pixel-12px-proportional-latin.ttf.woff2') format('woff2'),
+        url('fonts/ark-pixel-font-12px-proportional-ttf.woff-v2025.10.20/ark-pixel-12px-proportional-latin.ttf.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
     :root {
       --theme-color: #34d399;
       --theme-color-dark: #10b981;
@@ -37,12 +65,31 @@
       image-rendering: pixelated;
       image-rendering: -moz-crisp-edges;
       image-rendering: crisp-edges;
+      cursor: url('images/cusor.png'), auto;
+    }
+
+    /* 可点击元素使用 pointer 鼠标 */
+    a,
+    button,
+    .sidebar-toggle,
+    .docsify-copy-code-button,
+    [role="button"],
+    input[type="button"],
+    input[type="submit"] {
+      cursor: url('images/cusor-pointer.png'), pointer;
     }
 
     body {
       background-color: var(--base-background-color);
       color: var(--base-color);
-      font-family: 'Courier New', monospace;
+      font-family: 'Ark Pixel 12px', 'Ark Pixel 12px Latin', 'Courier New', monospace;
+      font-size: 15px;
+      line-height: 1.7;
+      letter-spacing: 0.03em;
+      -webkit-font-smoothing: none;
+      -moz-osx-font-smoothing: auto;
+      font-smooth: never;
+      text-rendering: optimizeSpeed;
       background-image:
         repeating-linear-gradient(0deg,
           transparent,
@@ -54,6 +101,53 @@
           transparent 39px,
           rgba(52, 211, 153, 0.02) 39px,
           rgba(52, 211, 153, 0.02) 40px);
+      position: relative;
+    }
+
+    /* 页面顶部装饰条纹 */
+    body>.app-nav::before,
+    main::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: repeating-linear-gradient(90deg,
+          var(--theme-color) 0px,
+          var(--theme-color) 20px,
+          var(--accent-color) 20px,
+          var(--accent-color) 40px);
+      z-index: 10000;
+      pointer-events: none;
+    }
+
+
+
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      width: 24px;
+      height: 24px;
+      background: url('images/heart.svg') center center / contain no-repeat;
+      opacity: 0.2;
+      z-index: 9999;
+      pointer-events: none;
+      animation: float 4s ease-in-out infinite reverse;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-6px);
+      }
     }
 
     .sidebar {
@@ -68,17 +162,54 @@
           transparent 39px,
           rgba(52, 211, 153, 0.03) 39px,
           rgba(52, 211, 153, 0.03) 40px);
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+    }
+
+    /* 侧边栏顶部装饰 */
+    .sidebar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: repeating-linear-gradient(90deg,
+          var(--theme-color) 0px,
+          var(--theme-color) 10px,
+          var(--accent-color) 10px,
+          var(--accent-color) 20px);
+      z-index: 10;
     }
 
     .sidebar-toggle {
-      background-color: transparent;
-      border: 3px solid var(--theme-color);
-      border-radius: 0;
+      background-color: #020617;
+      border: 0;
+      border-radius: 4px;
       box-shadow: 2px 2px 0 0 #000;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sidebar-toggle span {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      margin: 0;
+      background: url('images/list-icon.svg') center center / contain no-repeat;
+      filter: brightness(0) saturate(100%) invert(73%) sepia(48%) saturate(449%) hue-rotate(99deg) brightness(95%) contrast(89%);
+    }
+
+    .sidebar-toggle span:nth-child(n+2) {
+      display: none;
     }
 
     .sidebar-toggle:hover {
-      background-color: var(--theme-color);
+      background-color: #022c22;
       box-shadow: 1px 1px 0 0 #000;
       transform: translate(1px, 1px);
     }
@@ -88,7 +219,7 @@
       font-weight: 700;
       color: var(--theme-color);
       text-shadow: 3px 3px 0 #000;
-      font-family: 'Press Start 2P', cursive;
+      font-family: 'Ark Pixel 12px', 'Ark Pixel 12px Latin', 'Courier New', monospace;
       padding: 1.5rem 1rem;
       border-bottom: 3px solid var(--sidebar-border-color);
       background: rgba(52, 211, 153, 0.05);
@@ -96,24 +227,33 @@
     }
 
     .app-name::before {
-      content: '▶';
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background: url('images/logo.png') center center / contain no-repeat;
       margin-right: 0.5rem;
-      color: var(--accent-color);
-      animation: blink 1s step-end infinite;
+      vertical-align: middle;
+      filter: drop-shadow(2px 2px 0 #000);
     }
 
     .sidebar ul li a {
       color: var(--base-color);
       border-left: 3px solid transparent;
-      transition: all 0.1s;
+      transition: all 0.2s;
       padding-left: 1rem;
       position: relative;
     }
 
     .sidebar ul li a::before {
-      content: '▸';
+      content: '';
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background: url('images/right-arrow.svg') center center / contain no-repeat;
       position: absolute;
-      left: 0.3rem;
+      left: 0.2rem;
+      top: 0.6rem;
       opacity: 0;
       transition: opacity 0.2s;
     }
@@ -137,8 +277,9 @@
     }
 
     .sidebar ul li.active>a::before {
-      content: '▶';
       opacity: 1;
+      filter: brightness(0) saturate(100%) invert(64%) sepia(98%) saturate(1173%) hue-rotate(189deg) brightness(103%) contrast(96%);
+      animation: blink 1s step-end infinite;
     }
 
     /* 滚动条样式 */
@@ -155,14 +296,43 @@
     ::-webkit-scrollbar-thumb {
       background: var(--theme-color);
       border: 2px solid #000;
+      position: relative;
+      background-image:
+        repeating-linear-gradient(45deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 0, 0, 0.1) 2px,
+          rgba(0, 0, 0, 0.1) 4px);
     }
 
     ::-webkit-scrollbar-thumb:hover {
       background: var(--accent-color);
+      background-image:
+        repeating-linear-gradient(45deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 0, 0, 0.1) 2px,
+          rgba(0, 0, 0, 0.1) 4px);
     }
 
     ::-webkit-scrollbar-corner {
       background: #1a1a1a;
+    }
+
+    /* 侧边栏子菜单样式 */
+    .sidebar ul ul {
+      padding-left: 1rem;
+      border-left: 2px dotted rgba(52, 211, 153, 0.3);
+      margin-left: 0.5rem;
+    }
+
+    .sidebar ul ul li a {
+      font-size: 0.9em;
+      opacity: 0.8;
+    }
+
+    .sidebar ul ul li a:hover {
+      opacity: 1;
     }
 
     .markdown-section {
@@ -174,19 +344,23 @@
       color: var(--theme-color);
       border-bottom: 3px solid var(--theme-color);
       padding-bottom: 0.5rem;
-      text-shadow: 2px 2px 0 #000;
-      font-family: 'Press Start 2P', cursive;
-      font-size: 1.5rem;
+      font-family: 'Ark Pixel 12px', 'Ark Pixel 12px Latin', 'Courier New', monospace;
+      font-size: 1.8rem;
+      letter-spacing: 0.08em;
       position: relative;
       padding-left: 1rem;
     }
 
     .markdown-section h1::before {
-      content: '▶';
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background: url('images/star.svg') center center / contain no-repeat;
       position: absolute;
-      left: 0;
-      color: var(--accent-color);
-      animation: blink 1s step-end infinite;
+      left: -0.5rem;
+      top: 1.2rem;
+      animation: float 3s ease-in-out infinite;
     }
 
     @keyframes blink {
@@ -207,45 +381,68 @@
       border-bottom: 2px solid var(--accent-color);
       padding-bottom: 0.3rem;
       text-shadow: 1px 1px 0 #000;
-      font-family: 'Press Start 2P', cursive;
-      font-size: 1.2rem;
+      font-family: 'Ark Pixel 12px', 'Ark Pixel 12px Latin', 'Courier New', monospace;
+      font-size: 1.4rem;
+      letter-spacing: 0.06em;
       position: relative;
       padding-left: 1rem;
     }
 
     .markdown-section h2::before {
-      content: '■';
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background: url('images/gem-icon.svg') center center / contain no-repeat;
       position: absolute;
-      left: 0;
-      color: var(--theme-color);
+      left: -2px;
+      top: 50%;
+      transform: translateY(-50%);
+      filter: brightness(0) saturate(100%) invert(73%) sepia(48%) saturate(449%) hue-rotate(99deg) brightness(95%) contrast(89%);
     }
 
     .markdown-section h3 {
       color: var(--theme-color-light);
-      font-family: 'Press Start 2P', cursive;
-      font-size: 1rem;
+      font-family: 'Ark Pixel 12px', 'Ark Pixel 12px Latin', 'Courier New', monospace;
+      font-size: 1.1rem;
+      letter-spacing: 0.04em;
       position: relative;
       padding-left: 1rem;
     }
 
     .markdown-section h3::before {
-      content: '▸';
+      content: '';
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background: url('images/right-arrow.svg') center center / contain no-repeat;
       position: absolute;
       left: 0;
-      color: var(--accent-color);
+      top: 50%;
+      transform: translateY(-50%);
+      filter: brightness(0) saturate(100%) invert(64%) sepia(98%) saturate(1173%) hue-rotate(189deg) brightness(103%) contrast(96%);
     }
 
     .markdown-section a {
       color: var(--accent-color);
       text-decoration: none;
-      border-bottom: 1px dotted var(--accent-color);
       transition: all 0.2s;
+      position: relative;
     }
 
-    .markdown-section a:hover {
+    /* 强调文本样式 */
+    .markdown-section strong {
       color: var(--theme-color);
-      border-bottom: 2px solid var(--theme-color);
-      text-shadow: 0 0 5px rgba(52, 211, 153, 0.5);
+      font-weight: bold;
+      text-shadow: 1px 1px 0 #000;
+      position: relative;
+      padding: 0 0.2rem;
+    }
+
+    .markdown-section em {
+      color: var(--accent-color);
+      font-style: italic;
+      border-bottom: 1px dotted var(--accent-color);
     }
 
     .markdown-section code {
@@ -281,15 +478,13 @@
     }
 
     .markdown-section pre::before {
-      content: '< CODE >';
+      content: '';
       position: absolute;
       top: -3px;
       right: 10px;
-      background: var(--theme-color);
-      color: #000;
-      padding: 4px 12px;
-      font-family: 'Press Start 2P', cursive;
-      font-size: 0.6rem;
+      width: 24px;
+      height: 24px;
+      background: var(--theme-color) url('images/book.svg') center center / 16px 16px no-repeat;
       border: 3px solid #000;
       box-shadow: 3px 3px 0 0 rgba(0, 0, 0, 0.5);
     }
@@ -311,18 +506,22 @@
     .markdown-section blockquote {
       border-left: 4px solid var(--accent-color);
       background: rgba(96, 165, 250, 0.05);
-      padding: 1rem;
+      padding: 1rem 1rem 1rem 2.5rem;
       margin: 1rem 0;
       box-shadow: 3px 3px 0 0 rgba(0, 0, 0, 0.3);
       position: relative;
     }
 
     .markdown-section blockquote::before {
-      content: '💡';
+      content: '';
+      display: block;
+      width: 20px;
+      height: 20px;
+      background: url('images/gem-icon.svg') center center / contain no-repeat;
       position: absolute;
-      top: 0.5rem;
-      left: -2rem;
-      font-size: 1.5rem;
+      top: 1rem;
+      left: 0.8rem;
+      filter: brightness(0) saturate(100%) invert(64%) sepia(98%) saturate(1173%) hue-rotate(189deg) brightness(103%) contrast(96%);
     }
 
     .markdown-section ul,
@@ -333,11 +532,23 @@
     .markdown-section li {
       margin: 0.5rem 0;
       position: relative;
+      padding-left: 0.5rem;
     }
 
-    .markdown-section ul li::marker {
-      content: '▸ ';
-      color: var(--theme-color);
+    .markdown-section ul {
+      list-style: none;
+    }
+
+    .markdown-section ul li::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: url('images/right-arrow.svg') center center / contain no-repeat;
+      margin-right: 0.5rem;
+      margin-left: -1.2rem;
+      vertical-align: middle;
+      filter: brightness(0) saturate(100%) invert(73%) sepia(48%) saturate(449%) hue-rotate(99deg) brightness(95%) contrast(89%);
     }
 
     .markdown-section ol li::marker {
@@ -365,7 +576,7 @@
       color: #000;
       border: 3px solid #000;
       padding: 0.8rem;
-      font-family: 'Press Start 2P', cursive;
+      font-family: 'Ark Pixel 12px', 'Ark Pixel 12px Latin', 'Courier New', monospace;
       font-size: 0.7rem;
       text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
       position: relative;
@@ -389,23 +600,139 @@
       border: 2px solid var(--sidebar-border-color);
       padding: 0.8rem;
       background: rgba(10, 10, 10, 0.3);
+      transition: background 0.2s;
+    }
+
+    .markdown-section table tr:hover td {
+      background: rgba(52, 211, 153, 0.05);
+    }
+
+    .markdown-section table td:first-child {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .markdown-section table td:first-child::before {
+      content: '';
+      display: block;
+      width: 10px;
+      height: 10px;
+      background: url('images/right-arrow.svg') center center / contain no-repeat;
+      position: absolute;
+      left: 0.8rem;
+      top: 50%;
+      transform: translateY(-50%);
+      filter: brightness(0) saturate(100%) invert(73%) sepia(48%) saturate(449%) hue-rotate(99deg) brightness(95%) contrast(89%);
     }
 
     .markdown-section table tr:hover {
       background: rgba(52, 211, 153, 0.1);
     }
 
+    /* 图片样式 */
+    .markdown-section img {
+      border: 4px solid var(--theme-color);
+      box-shadow:
+        0 0 0 2px #000,
+        6px 6px 0 0 #000;
+      image-rendering: pixelated;
+      max-width: 100%;
+      margin: 1rem 0;
+      background: rgba(10, 10, 10, 0.5);
+      padding: 0.5rem;
+    }
+
+    .markdown-section img:hover {
+      box-shadow:
+        0 0 0 2px #000,
+        6px 6px 0 0 #000,
+        0 0 20px rgba(52, 211, 153, 0.3);
+      transform: translateY(-2px);
+      transition: all 0.3s;
+    }
+
+    /* 水平分隔线样式 */
+    .markdown-section hr {
+      border: none;
+      height: 4px;
+      background: repeating-linear-gradient(90deg,
+          var(--theme-color) 0px,
+          var(--theme-color) 10px,
+          transparent 10px,
+          transparent 20px);
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .markdown-section hr::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 20px;
+      background: var(--base-background-color) url('images/gem-icon.svg') center center / 16px 16px no-repeat;
+      filter: brightness(0) saturate(100%) invert(73%) sepia(48%) saturate(449%) hue-rotate(99deg) brightness(95%) contrast(89%);
+    }
+
     .markdown-section table tr:hover td {
       border-color: var(--theme-color);
     }
 
-    /* 搜索框样式 */
+    /* 提示框样式（docsify alerts） */
+    .markdown-section .tip,
+    .markdown-section .warn,
+    .markdown-section .danger {
+      border-radius: 4px !important;
+      border-left: 4px solid var(--theme-color) !important;
+      background: rgba(52, 211, 153, 0.05) !important;
+      padding: 1rem 1rem 1rem 3rem !important;
+      box-shadow: 3px 3px 0 0 rgba(0, 0, 0, 0.3) !important;
+      position: relative;
+    }
+
+    .markdown-section .tip::before,
+    .markdown-section .warn::before,
+    .markdown-section .danger::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 20px;
+      background: url('images/gem-icon.svg') center center / contain no-repeat;
+      position: absolute;
+      left: 1rem;
+      top: 1rem;
+      filter: brightness(0) saturate(100%) invert(73%) sepia(48%) saturate(449%) hue-rotate(99deg) brightness(95%) contrast(89%);
+    }
+
+    .markdown-section .warn {
+      border-left-color: var(--accent-color) !important;
+      background: rgba(96, 165, 250, 0.05) !important;
+    }
+
+    .markdown-section .warn::before {
+      background-image: url('images/fire-cion.svg');
+      filter: brightness(0) saturate(100%) invert(64%) sepia(98%) saturate(1173%) hue-rotate(189deg) brightness(103%) contrast(96%);
+    }
+
+    .markdown-section .danger {
+      border-left-color: #f43f5e !important;
+      background: rgba(244, 63, 94, 0.05) !important;
+    }
+
+    .markdown-section .danger::before {
+      background-image: url('images/heart.svg');
+      filter: none;
+    }
+
+    /* 搜索框样式（基础样式，实际主题在底部使用 !important 覆盖） */
     .search input {
       background-color: #1a1a1a;
       border: 4px solid var(--theme-color);
       color: var(--base-color);
       font-family: 'Courier New', monospace;
-      border-radius: 0;
+      border-radius: 4px;
       padding: 0.8rem 1rem;
       box-shadow:
         0 0 0 2px #000,
@@ -448,39 +775,32 @@
       background: var(--theme-color) !important;
       color: #000 !important;
       border: 2px solid #000 !important;
-      font-family: 'Press Start 2P', cursive !important;
+      font-family: 'Ark Pixel 12px', 'Ark Pixel 12px Latin', 'Courier New', monospace !important;
       font-size: 0.6rem !important;
+      padding: 4px 8px !important;
+      border-radius: 4px !important;
+    }
+
+    .docsify-copy-code-button::before {
+      content: '';
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background: url('images/banner-icon.svg') center center / contain no-repeat;
+      margin-right: 4px;
+      vertical-align: middle;
+      filter: brightness(0) invert(1);
     }
 
     .docsify-copy-code-button:hover {
       background: var(--accent-color) !important;
       box-shadow: 2px 2px 0 0 #000 !important;
+      transform: translate(1px, 1px);
     }
 
     /* 封面样式 */
     section.cover {
-      background:
-        repeating-linear-gradient(0deg,
-          transparent,
-          transparent 3px,
-          rgba(52, 211, 153, 0.05) 3px,
-          rgba(52, 211, 153, 0.05) 4px),
-        repeating-linear-gradient(90deg,
-          transparent,
-          transparent 3px,
-          rgba(52, 211, 153, 0.05) 3px,
-          rgba(52, 211, 153, 0.05) 4px),
-        repeating-linear-gradient(0deg,
-          transparent,
-          transparent 19px,
-          rgba(96, 165, 250, 0.03) 19px,
-          rgba(96, 165, 250, 0.03) 20px),
-        repeating-linear-gradient(90deg,
-          transparent,
-          transparent 19px,
-          rgba(96, 165, 250, 0.03) 19px,
-          rgba(96, 165, 250, 0.03) 20px),
-        #0a0a0a;
+      background: #0a0a0a url('images/machine-learning-header.png') center center / cover no-repeat !important;
       position: relative;
       overflow: hidden;
       border-bottom: 4px solid var(--theme-color);
@@ -494,9 +814,31 @@
       left: 0;
       right: 0;
       bottom: 0;
+      background: linear-gradient(180deg,
+          rgba(10, 10, 10, 0.2) 0%,
+          rgba(10, 10, 10, 0.6) 50%,
+          rgba(10, 10, 10, 0.85) 100%);
+      pointer-events: none;
+    }
+
+    section.cover::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       background:
-        radial-gradient(circle at 20% 30%, rgba(52, 211, 153, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(96, 165, 250, 0.15) 0%, transparent 40%);
+        repeating-linear-gradient(0deg,
+          transparent,
+          transparent 39px,
+          rgba(52, 211, 153, 0.03) 39px,
+          rgba(52, 211, 153, 0.03) 40px),
+        repeating-linear-gradient(90deg,
+          transparent,
+          transparent 39px,
+          rgba(52, 211, 153, 0.03) 39px,
+          rgba(52, 211, 153, 0.03) 40px);
       pointer-events: none;
       animation: pulse 4s ease-in-out infinite;
     }
@@ -513,30 +855,7 @@
       }
     }
 
-    section.cover::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: repeating-linear-gradient(90deg,
-          var(--theme-color) 0px,
-          var(--theme-color) 10px,
-          var(--accent-color) 10px,
-          var(--accent-color) 20px);
-      animation: scan 2s linear infinite;
-    }
 
-    @keyframes scan {
-      0% {
-        transform: translateX(-20px);
-      }
-
-      100% {
-        transform: translateX(0);
-      }
-    }
 
     section.cover .cover-main {
       margin: 0;
@@ -559,20 +878,10 @@
         8px 8px 0 0 #000;
     }
 
-    @keyframes float {
 
-      0%,
-      100% {
-        transform: translateY(0px);
-      }
-
-      50% {
-        transform: translateY(-10px);
-      }
-    }
 
     section.cover h1 {
-      font-family: 'Press Start 2P', cursive;
+      font-family: 'Ark Pixel 12px', 'Ark Pixel 12px Latin', 'Courier New', monospace;
       color: var(--theme-color);
       text-shadow:
         4px 4px 0 #000,
@@ -583,12 +892,25 @@
       animation: glow 2s ease-in-out infinite alternate;
       position: relative;
       display: inline-block;
-      padding: 1rem 2rem;
-      background: rgba(10, 10, 10, 0.6);
+      padding: 1rem 2rem 1rem 3rem;
+      background: rgba(10, 10, 10, 0.8);
       border: 3px solid var(--theme-color);
       box-shadow:
         0 0 0 1px #000,
         6px 6px 0 0 #000;
+    }
+
+    section.cover h1::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 32px;
+      background: url('images/trophy-icon.svg') center center / contain no-repeat;
+      position: absolute;
+      left: 0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      filter: drop-shadow(2px 2px 0 #000);
     }
 
     @keyframes glow {
@@ -628,11 +950,23 @@
       font-family: 'Courier New', monospace;
       color: var(--base-color);
       border-left: 4px solid var(--theme-color);
-      background: rgba(26, 26, 26, 0.8);
-      padding: 1rem 1.5rem;
+      background: rgba(26, 26, 26, 0.9);
+      padding: 1rem 1.5rem 1rem 3rem;
       box-shadow: 4px 4px 0 0 #000;
       backdrop-filter: blur(10px);
       font-size: 1.1rem;
+      position: relative;
+    }
+
+    section.cover blockquote::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 24px;
+      background: url('images/book.svg') center center / contain no-repeat;
+      position: absolute;
+      left: 0.8rem;
+      top: 1rem;
     }
 
     section.cover ul {
@@ -644,8 +978,22 @@
     section.cover ul li {
       font-family: 'Courier New', monospace;
       color: var(--base-color);
-      padding: 0.5rem 0;
+      padding: 0.5rem 0 0.5rem 1.5rem;
       font-size: 1rem;
+      position: relative;
+    }
+
+    section.cover ul li::before {
+      content: '';
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background: url('images/star.svg') center center / contain no-repeat;
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      filter: drop-shadow(1px 1px 0 #000);
     }
 
     section.cover .cover-main>p:last-child a {
@@ -653,7 +1001,7 @@
       color: #000;
       border: 4px solid #000;
       padding: 1rem 2.5rem;
-      font-family: 'Press Start 2P', cursive;
+      font-family: 'Ark Pixel 12px', 'Ark Pixel 12px Latin', 'Courier New', monospace;
       font-size: 0.7rem;
       text-decoration: none;
       display: inline-block;
@@ -664,11 +1012,18 @@
       transition: all 0.1s;
       position: relative;
       text-transform: uppercase;
+      border-radius: 4px;
     }
 
     section.cover .cover-main>p:last-child a::before {
-      content: '▶';
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background: url('images/right-arrow.svg') center center / contain no-repeat;
       margin-right: 0.5rem;
+      vertical-align: middle;
+      filter: brightness(0) invert(1);
       animation: blink 1s step-end infinite;
     }
 
@@ -690,7 +1045,14 @@
     }
 
     section.cover .cover-main>p:last-child a:last-child::before {
-      content: '★';
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background: url('images/star.svg') center center / contain no-repeat;
+      margin-right: 0.5rem;
+      vertical-align: middle;
+      filter: brightness(0) saturate(100%) invert(73%) sepia(48%) saturate(449%) hue-rotate(99deg) brightness(95%) contrast(89%);
     }
 
     section.cover .cover-main>p:last-child a:last-child:hover {
@@ -699,6 +1061,126 @@
       box-shadow:
         0 0 0 2px var(--theme-color),
         3px 3px 0 0 #000;
+    }
+
+    section.cover .cover-main>p:last-child a:last-child:hover::before {
+      filter: brightness(0) invert(1);
+    }
+
+    /* 搜索框样式 */
+    .search input {
+      background: #1a1a1a !important;
+      border: 3px solid var(--theme-color) !important;
+      color: var(--base-color) !important;
+      border-radius: 4px !important;
+      padding: 0.5rem 0.5rem 0.5rem 2.5rem !important;
+      font-family: 'Ark Pixel 12px', 'Ark Pixel 12px Latin', 'Courier New', monospace !important;
+      box-shadow: 3px 3px 0 0 #000 !important;
+      transition: all 0.2s !important;
+    }
+
+    .search input:focus {
+      border-color: var(--accent-color) !important;
+      box-shadow: 3px 3px 0 0 #000, 0 0 10px rgba(96, 165, 250, 0.3) !important;
+      outline: none !important;
+    }
+
+    .search input::placeholder {
+      color: rgba(224, 224, 224, 0.4) !important;
+    }
+
+    .search .input-wrap::before {
+      content: '';
+      position: absolute;
+      left: 1.7rem;
+      width: 16px;
+      height: 16px;
+      background: url('images/search-icon.svg') center center / contain no-repeat;
+      filter: brightness(0) saturate(100%) invert(73%) sepia(48%) saturate(449%) hue-rotate(99deg) brightness(95%) contrast(89%);
+      z-index: 1;
+    }
+
+    .search .results-panel {
+      background: #1a1a1a !important;
+      border: 3px solid var(--theme-color) !important;
+      border-radius: 4px !important;
+      box-shadow: 6px 6px 0 0 #000 !important;
+    }
+
+    .search .results-panel .matching-post {
+      border-bottom: 2px solid rgba(52, 211, 153, 0.2) !important;
+    }
+
+    .search .results-panel .matching-post:hover {
+      background: rgba(52, 211, 153, 0.1) !important;
+    }
+
+    /* 加载动画优化 */
+    #app {
+      font-family: 'Ark Pixel 12px', 'Ark Pixel 12px Latin', 'Courier New', monospace;
+      color: var(--theme-color);
+      text-align: center;
+      padding-top: 20vh;
+      font-size: 1.5rem;
+      text-shadow: 2px 2px 0 #000;
+    }
+
+    /* 页面内容淡入动画 */
+    .markdown-section {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+
+    /* 使用 border.svg 组装像素边框 */
+    .markdown-section pre,
+    .markdown-section table,
+    .markdown-section img,
+    .markdown-section blockquote,
+    .markdown-section .tip,
+    .markdown-section .warn,
+    .markdown-section .danger,
+    section.cover .cover-main>p:first-child img,
+    section.cover blockquote,
+    .search input,
+    .search .results-panel,
+    .docsify-copy-code-button {
+      border-style: solid;
+      border-image: url('images/border.svg') 3 / 6px / 0px stretch;
+      position: relative;
+      clip-path: polygon(6px 0px, 6px 2px, 4px 2px, 4px 4px, 2px 4px, 2px 6px, 0px 6px, 0px 8px, 0px calc(100% - 6px), 2px calc(100% - 6px), 2px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 2px), 6px calc(100% - 2px), 6px calc(100% + 0px), 8px calc(100% + 0px), calc(100% - 6px) calc(100% + 0px), calc(100% - 6px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 6px), calc(100% + 0px) calc(100% - 6px), calc(100% + 0px) calc(100% - 8px), calc(100% + 0px) 6px, calc(100% - 2px) 6px, calc(100% - 2px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 2px, calc(100% - 6px) 2px, calc(100% - 6px) 0px, calc(100% - 8px) 0px);
+    }
+
+    /* 分页导航样式 */
+    .docsify-pagination-container {
+      border-top: 3px solid var(--theme-color);
+      padding-top: 2rem;
+      margin-top: 3rem;
+    }
+
+    .pagination-item-title {
+      font-family: 'Ark Pixel 12px', 'Ark Pixel 12px Latin', 'Courier New', monospace !important;
+      color: var(--theme-color) !important;
+    }
+
+    .pagination-item-label {
+      color: var(--accent-color) !important;
+    }
+
+    .pagination-item:hover .pagination-item-title {
+      color: var(--accent-color) !important;
+      text-shadow: 0 0 5px rgba(96, 165, 250, 0.5);
     }
   </style>
 </head>

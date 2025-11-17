@@ -6,6 +6,7 @@
   // 防止重复创建横幅的标记
   let bannerCreated = false;
   let autoCloseTimer = null;
+  let isClosing = false;
 
   function plugin(hook, vm) {
     hook.ready(function () {
@@ -37,35 +38,63 @@
 
       // 添加到 DOM
       const placeholder = document.querySelector('body');
-      placeholder.insertBefore(bannerElement, placeholder.childNodes[0]);
+      if (!placeholder) {
+        // 理论上不会发生，仅作为安全保护
+        bannerCreated = false;
+        return;
+      }
+      placeholder.insertBefore(bannerElement, placeholder.firstChild);
 
       // 添加内容
       const contentEl = document.querySelector(`${defaultTag}#TOPBANNER`);
-      contentEl.innerHTML = bannerContent;
+      if (!contentEl) {
+        // 如果找不到元素，回退到刚创建的 bannerElement
+        bannerElement.innerHTML = bannerContent;
+      } else {
+        contentEl.innerHTML = bannerContent;
+        // 设置样式
+        contentEl.style.position = bannerPosition;
+        contentEl.style.zIndex = bannerZIndex;
+        contentEl.style.textAlign = textAlign;
+      }
 
-      // 设置样式
-      contentEl.style.position = bannerPosition;
-      contentEl.style.zIndex = bannerZIndex;
-      contentEl.style.textAlign = textAlign;
+      const getCurrentBanner = () => document.getElementById('TOPBANNER');
 
       // 关闭横幅的函数
       const closeBanner = () => {
+        if (isClosing) {
+          return;
+        }
+
+        const currentBanner = getCurrentBanner();
+        if (!currentBanner) {
+          bannerCreated = false;
+          return;
+        }
+
+        isClosing = true;
+
         if (autoCloseTimer) {
           clearTimeout(autoCloseTimer);
           autoCloseTimer = null;
         }
-        bannerElement.style.animation = 'bannerFadeOut 0.3s ease-out forwards';
+
+        currentBanner.style.animation = 'bannerFadeOut 0.3s ease-out forwards';
         setTimeout(() => {
-          if (bannerElement.parentNode) {
-            bannerElement.parentNode.removeChild(bannerElement);
+          const parent = currentBanner.parentNode;
+          if (parent) {
+            parent.removeChild(currentBanner);
           }
           bannerCreated = false; // 重置标记，允许再次创建
+          isClosing = false;
         }, 300);
       };
 
+      const actualContentEl = getCurrentBanner() || bannerElement;
+
       // 点击链接关闭 banner
-      const links = contentEl.querySelectorAll('a');
-      links.forEach(link => {
+      const links = actualContentEl.querySelectorAll('a');
+      links.forEach((link) => {
         link.addEventListener('click', (e) => {
           // 如果链接有 href，不阻止默认行为
           if (!link.getAttribute('href') || link.getAttribute('href') === '#') {
@@ -74,16 +103,6 @@
           closeBanner();
         });
       });
-
-      // 添加关闭按钮
-      if (topBanner.closeable !== false) {
-        const closeBtn = document.createElement('button');
-        closeBtn.className = 'pixel-banner-close';
-        closeBtn.innerHTML = '✕';
-        closeBtn.setAttribute('aria-label', '关闭横幅');
-        closeBtn.addEventListener('click', closeBanner);
-        contentEl.appendChild(closeBtn);
-      }
 
       // 自动关闭（如果设置了自动关闭时间）
       if (autoCloseDuration > 0) {

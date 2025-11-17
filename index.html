@@ -74,7 +74,7 @@
 
     :root {
       --theme-color: #34d399;
-      --theme-color-dark: #10b981;
+      --theme-color-dark: #088c60;
       --theme-color-light: #6ee7b7;
       --accent-color: #60a5fa;
       --base-background-color: #0a0a0a;
@@ -241,76 +241,6 @@
       transform: translate(2px, 2px);
     }
 
-
-    .app-name {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--theme-color);
-      text-shadow: 3px 3px 0 #000;
-      font-family: 'Ark Pixel 12px', 'Courier New', monospace;
-      padding: 1.5rem 1rem;
-      border-bottom: 3px solid var(--sidebar-border-color);
-      background: rgba(52, 211, 153, 0.05);
-      position: relative;
-    }
-
-    .app-name::before {
-      content: '';
-      display: inline-block;
-      width: 30px;
-      height: 30px;
-      background: url('images/logo.webp') center center / contain no-repeat;
-      margin-right: 0.8rem;
-      transform: translateY(-4px);
-      vertical-align: middle;
-      filter: drop-shadow(2px 2px 0 #000);
-    }
-
-    .sidebar ul li a {
-      color: var(--base-color);
-      border-left: 3px solid transparent;
-      transition: all 0.2s;
-      padding-left: 1rem;
-      position: relative;
-    }
-
-    .sidebar ul li a::before {
-      content: '';
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      background: url('images/right-arrow.svg') center center / contain no-repeat;
-      position: absolute;
-      left: 0.2rem;
-      top: 0.6rem;
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
-    .sidebar ul li a:hover {
-      color: var(--theme-color);
-      border-left: 3px solid var(--theme-color);
-      text-shadow: 1px 1px 0 #000;
-      background: rgba(52, 211, 153, 0.1);
-    }
-
-    .sidebar ul li a:hover::before {
-      opacity: 1;
-    }
-
-    .sidebar ul li.active>a {
-      color: var(--accent-color);
-      border-left: 3px solid var(--accent-color);
-      font-weight: bold;
-      background: rgba(96, 165, 250, 0.1);
-    }
-
-    .sidebar ul li.active>a::before {
-      opacity: 1;
-      filter: brightness(0) saturate(100%) invert(64%) sepia(98%) saturate(1173%) hue-rotate(189deg) brightness(103%) contrast(96%);
-      animation: blink 1s step-end infinite;
-    }
-
     /* 滚动条样式 */
     ::-webkit-scrollbar {
       width: 12px;
@@ -346,22 +276,6 @@
 
     ::-webkit-scrollbar-corner {
       background: #1a1a1a;
-    }
-
-    /* 侧边栏子菜单样式 */
-    .sidebar ul ul {
-      padding-left: 1rem;
-      border-left: 2px dotted rgba(52, 211, 153, 0.3);
-      margin-left: 0.5rem;
-    }
-
-    .sidebar ul ul li a {
-      font-size: 0.9em;
-      opacity: 0.8;
-    }
-
-    .sidebar ul ul li a:hover {
-      opacity: 1;
     }
 
     .markdown-section {
@@ -426,7 +340,6 @@
       left: -0.5rem;
       top: 50%;
       transform: translateY(-50%);
-      filter: brightness(0) saturate(100%) invert(73%) sepia(48%) saturate(449%) hue-rotate(99deg) brightness(95%) contrast(89%);
     }
 
     .markdown-section h3 {
@@ -564,7 +477,6 @@
       margin-right: 0.5rem;
       margin-left: -1.2rem;
       vertical-align: middle;
-      filter: brightness(0) saturate(100%) invert(73%) sepia(48%) saturate(449%) hue-rotate(99deg) brightness(95%) contrast(89%);
     }
 
     .markdown-section ol li::marker {
@@ -618,44 +530,22 @@
       transform: rotate(45deg);
     }
 
-    .markdown-section table {
-      border: 4px solid var(--theme-color);
-      border-collapse: separate;
-      border-spacing: 0;
-      box-shadow:
-        0 0 0 2px #000,
-        6px 6px 0 0 #000;
-      background-image:
-        repeating-linear-gradient(0deg,
-          transparent,
-          transparent 39px,
-          rgba(52, 211, 153, 0.02) 39px,
-          rgba(52, 211, 153, 0.02) 40px);
-    }
-
     .markdown-section table th {
-      background: var(--theme-color);
-      color: #000;
-      border: 3px solid #000;
+      background: #34d39938;
+      border: 2px solid var(--theme-color);
       padding: 0.8rem;
       font-family: 'Ark Pixel 12px', 'Courier New', monospace;
-      font-size: 0.7rem;
-      text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+      font-weight: bold;
       position: relative;
     }
 
-    .markdown-section table th::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: repeating-linear-gradient(90deg,
-          #000 0px,
-          #000 4px,
-          transparent 4px,
-          transparent 8px);
+    .markdown-section tr {
+      background-color: transparent;
+      border-top: 0;
+    }
+    .markdown-section tr:nth-child(2n) {
+      background-color: #34d39918;
+      border-top: 0;
     }
 
     .markdown-section table td {
@@ -715,12 +605,13 @@
       border: none;
       height: 4px;
       background: repeating-linear-gradient(90deg,
-          var(--theme-color) 0px,
-          var(--theme-color) 10px,
+          var(--accent-color) 0px,
+          var(--accent-color) 10px,
           transparent 10px,
           transparent 20px);
-      margin: 2rem 0;
+      margin: 4rem 0;
       position: relative;
+      opacity: 0.6;
     }
 
     .markdown-section hr::before {
@@ -732,7 +623,7 @@
       width: 20px;
       height: 20px;
       background: var(--base-background-color) url('images/gem-icon.svg') center center / 16px 16px no-repeat;
-      filter: brightness(0) saturate(100%) invert(73%) sepia(48%) saturate(449%) hue-rotate(99deg) brightness(95%) contrast(89%);
+      filter: brightness(0) saturate(100%) invert(64%) sepia(98%) saturate(1173%) hue-rotate(189deg) brightness(103%) contrast(96%);
     }
 
     .markdown-section table tr:hover td {
@@ -745,47 +636,53 @@
     .markdown-section .danger {
       border-radius: 4px !important;
       border-left: 4px solid var(--theme-color) !important;
-      background: rgba(52, 211, 153, 0.05) !important;
       padding: 1rem 1rem 1rem 3rem !important;
       box-shadow: 3px 3px 0 0 rgba(0, 0, 0, 0.3) !important;
-      position: relative;
+      position: relative !important;
+      color: var(--base-color) !important;
     }
 
     .markdown-section .tip::before,
     .markdown-section .warn::before,
     .markdown-section .danger::before {
-      background-color: transparent !important;
-
-      content: '';
       display: block;
-      width: 20px;
-      height: 20px;
-      background: url('images/gem-icon.svg') center center / contain no-repeat;
-      position: absolute;
+      width: 16px !important;
+      height: 16px !important;
+      font-size: 12px !important;
+      line-height: 16px !important;
+      color: #ffffff !important;
+      position: absolute !important;
       left: 1rem !important;
-      top: 1.2rem !important;
-      filter: brightness(0) saturate(100%) invert(73%) sepia(48%) saturate(449%) hue-rotate(99deg) brightness(95%) contrast(89%);
+      top: 1.3rem !important;
+      text-align: center;
     }
 
-    .markdown-section .warn {
-      border-left-color: var(--accent-color) !important;
-      background: rgba(96, 165, 250, 0.05) !important;
+    .markdown-section .tip::before {
+      content: 'i' !important;
+      background-color: var(--theme-color-dark) !important;
+    }
+    .markdown-section .tip {
+      background: rgb(8, 140, 96, 0.1) !important
     }
 
     .markdown-section .warn::before {
-      background-image: url('images/fire-cion.svg');
-      filter: brightness(0) saturate(100%) invert(64%) sepia(98%) saturate(1173%) hue-rotate(189deg) brightness(103%) contrast(96%);
+      content: '!' !important;
+      background-color: #c2920e !important;
+      border-radius: 100%;
     }
-
-    .markdown-section .danger {
-      border-left-color: #f43f5e !important;
-      background: rgba(244, 63, 94, 0.05) !important;
+    .markdown-section .warn {
+      background: rgba(210, 182, 0, 0.1) !important;
     }
 
     .markdown-section .danger::before {
-      background-image: url('images/heart.svg');
-      filter: none;
+      content: '!' !important;
+      background-color: #c20e0e !important;
+      border-radius: 100%;
     }
+    .markdown-section .danger {
+      background: rgba(200, 0, 0, 0.1) !important;
+    }
+
 
     /* 搜索框样式（基础样式，实际主题在底部使用 !important 覆盖） */
     .search input {
@@ -1246,7 +1143,6 @@
 
     /* 使用 border.svg 组装像素边框 */
     .markdown-section pre,
-    .markdown-section table,
     .markdown-section blockquote,
     .markdown-section .tip,
     .markdown-section .warn,
@@ -1291,13 +1187,12 @@
     window.$docsify = {
       name: 'Script Graph',
       repo: 'https://github.com/qq865738120/script_graph_docs',
-      loadSidebar: true,
+      loadSidebar: false, // 禁用默认侧边栏，使用自定义侧边栏
       subMaxLevel: 2,
       auto2top: true,
       homepage: 'README.md',
       coverpage: true,
       onlyCover: true,
-      routerMode: 'history',
       topMargin: 200,
 
       // 搜索配置
@@ -1378,8 +1273,14 @@
     }
   </script>
 
+  <!-- 侧边栏配置（必须在 Docsify 之前加载） -->
+  <script src="./sidebar-config.js"></script>
+
   <!-- Docsify 核心 -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+
+  <!-- 自定义侧边栏插件 -->
+  <script src="./docsify-custom-sidebar.js"></script>
 
   <!-- 术语表（docsify-glossary）插件 -->
   <script src="./docsify-glossary.min.js"></script>

@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
+  <base href="/">
   <title>Script Graph 脚本图编辑器文档</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="Script Graph 脚本图编辑器 - Cocos Creator 可视化脚本编辑插件">
@@ -1291,14 +1292,13 @@
       name: 'Script Graph',
       repo: 'https://github.com/qq865738120/script_graph_docs',
       loadSidebar: true,
-      subMaxLevel: 1,
-      auto2top: false,
+      subMaxLevel: 2,
+      auto2top: true,
       homepage: 'README.md',
       coverpage: true,
-      onlyCover: false,
-      alias: {
-        '/.*/_sidebar.md': '/_sidebar.md'  // 所有页面使用根目录的 _sidebar.md
-      },
+      onlyCover: true,
+      routerMode: 'history',
+      topMargin: 200,
 
       // 搜索配置
       search: {
@@ -1306,7 +1306,7 @@
         paths: 'auto',
         placeholder: '搜索文档...',
         noData: '没有找到结果',
-        depth: 4,
+        depth: 2,
         hideOtherSidebarContent: false
       },
 
@@ -1352,19 +1352,6 @@
         textAlign: 'center',
         closeable: true,
         autoCloseDuration: 12000  // 12秒后自动关闭
-      },
-
-      // 自动标题配置
-      autoHeaders: {
-        // Separator for header numbering (e.g., '.', '-', ')')
-        separator: '.',
-        // Boolean indicating if headers should be added to the sidebar
-        sidebar: false,
-        // Number of header levels to include (1 to 6) or an object with start and finish properties
-        levels: 6,
-        // levels: { start: 1, finish: 6 }
-        // Boolean to enable or disable debug messages
-        debug: false
       },
 
       // 进度条配置
@@ -1423,9 +1410,6 @@
 
   <!-- 字体大小控制插件 -->
   <script src="./docsify-fontsize.js"></script>
-
-  <!-- 自动标题插件 -->
-  <script src="//cdn.jsdelivr.net/npm/@markbattistella/docsify-autoheaders@latest"></script>
 
   <!-- 进度条插件 -->
   <script src="//cdn.jsdelivr.net/npm/docsify-progress@latest/dist/progress.min.js"></script>

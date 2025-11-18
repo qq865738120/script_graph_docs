@@ -76,11 +76,15 @@
       --theme-color: #34d399;
       --theme-color-dark: #088c60;
       --theme-color-light: #6ee7b7;
-      --accent-color: #60a5fa;
+      --accent-color: #fde68a;
       --base-background-color: #0a0a0a;
       --base-color: #e0e0e0;
       --sidebar-background: #1a1a1a;
       --sidebar-border-color: #34d399;
+      /* 新增中性色调 */
+      --border-color: #404040;
+      --border-color-hover: #606060;
+      --subtle-border: #2a2a2a;
     }
 
     * {
@@ -178,9 +182,9 @@
     .sidebar {
       padding-top: 2px !important;
       background-color: var(--sidebar-background);
-      border-right: 4px solid var(--sidebar-border-color);
+      border-right: 4px solid var(--border-color);
       box-shadow:
-        inset -2px 0 0 0 var(--theme-color),
+        inset -2px 0 0 0 var(--border-color),
         5px 0 0 0 #000;
     }
 
@@ -192,7 +196,7 @@
 
     .sidebar-toggle-button {
       background-color: #1a1a1a;
-      border: 3px solid rgba(52, 211, 153, 0.4);
+      border: 3px solid rgba(64, 64, 64, 0.6);
       border-radius: 0;
       box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.5);
       width: 40px !important;
@@ -211,8 +215,8 @@
       height: 26px;
       margin: 0;
       background: url('images/list-icon.svg') center center / contain no-repeat;
-      filter: brightness(0) saturate(100%) invert(73%) sepia(48%) saturate(449%) hue-rotate(99deg) brightness(95%) contrast(89%);
-      opacity: 0.8;
+      filter: brightness(0) saturate(100%) invert(50%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%);
+      opacity: 0.7;
       cursor: url('images/cusor-pointer.png'), pointer !important;
     }
 
@@ -222,21 +226,21 @@
     }
 
     .sidebar-toggle:hover {
-      background-color: rgba(52, 211, 153, 0.1);
-      border-color: var(--theme-color);
+      background-color: rgba(253, 230, 138, 0.1);
+      border-color: var(--accent-color);
       box-shadow: 
         1px 1px 0 0 #000,
-        0 0 8px rgba(52, 211, 153, 0.2);
+        0 0 8px rgba(253, 230, 138, 0.2);
       transform: translate(1px, 1px);
     }
 
     .sidebar-toggle:hover span {
       opacity: 1;
-      filter: brightness(0) saturate(100%) invert(73%) sepia(48%) saturate(449%) hue-rotate(99deg) brightness(105%) contrast(95%);
+      filter: brightness(0) saturate(100%) invert(87%) sepia(21%) saturate(434%) hue-rotate(359deg) brightness(103%) contrast(98%);
     }
 
     .sidebar-toggle:active {
-      background-color: rgba(52, 211, 153, 0.15);
+      background-color: rgba(253, 230, 138, 0.15);
       box-shadow: 1px 1px 0 0 #000 inset;
       transform: translate(2px, 2px);
     }
@@ -249,11 +253,11 @@
 
     ::-webkit-scrollbar-track {
       background: #1a1a1a;
-      border: 2px solid var(--theme-color);
+      border: 2px solid var(--border-color);
     }
 
     ::-webkit-scrollbar-thumb {
-      background: var(--theme-color);
+      background: var(--border-color-hover);
       border: 2px solid #000;
       position: relative;
       background-image:
@@ -285,7 +289,7 @@
 
     .markdown-section h1 {
       color: var(--theme-color);
-      border-bottom: 3px solid var(--theme-color);
+      border-bottom: 3px solid var(--border-color-hover);
       padding-bottom: 0.5rem;
       font-family: 'Ark Pixel 12px', 'Courier New', monospace;
       font-size: 1.8em;
@@ -343,12 +347,13 @@
     }
 
     .markdown-section h3 {
-      color: var(--theme-color-light);
+      color: var(--base-color);
       font-family: 'Ark Pixel 12px', 'Courier New', monospace;
       font-size: 1.1em;
       letter-spacing: 0.04em;
       position: relative;
       padding-left: 1rem;
+      opacity: 0.9;
     }
 
     .markdown-section h3::before {
@@ -361,7 +366,8 @@
       left: 0;
       top: 50%;
       transform: translateY(-50%);
-      filter: brightness(0) saturate(100%) invert(64%) sepia(98%) saturate(1173%) hue-rotate(189deg) brightness(103%) contrast(96%);
+      filter: brightness(0) saturate(100%) invert(50%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(90%);
+      opacity: 0.6;
     }
 
     .markdown-section a {
@@ -378,7 +384,7 @@
 
     /* 强调文本样式 */
     .markdown-section strong {
-      color: var(--theme-color);
+      color: var(--accent-color);
       font-weight: bold;
       text-shadow: 1px 1px 0 #000;
       position: relative;
@@ -393,7 +399,7 @@
 
     .markdown-section code {
       background-color: #1a1a1a;
-      border: 1px solid var(--theme-color);
+      border: 1px solid var(--border-color);
       border-radius: 0.25rem !important;
       padding: 3px 8px;
       font-family: 'Roboto Mono,Monaco,courier,monospace', monospace;
@@ -412,7 +418,7 @@
 
     .markdown-section pre {
       background-color: #1a1a1a;
-      border: 4px solid var(--theme-color);
+      border: 4px solid var(--border-color);
       box-shadow:
         0 0 0 2px #000,
         6px 6px 0 0 #000;
@@ -421,14 +427,14 @@
         repeating-linear-gradient(0deg,
           transparent,
           transparent 19px,
-          rgba(52, 211, 153, 0.02) 19px,
-          rgba(52, 211, 153, 0.02) 20px);
+          rgba(64, 64, 64, 0.1) 19px,
+          rgba(64, 64, 64, 0.1) 20px);
       line-height: 1.5;
     }
 
     .markdown-section blockquote {
       border-left: 4px solid var(--accent-color);
-      background: rgba(96, 165, 250, 0.05);
+      background: rgba(253, 230, 138, 0.05);
       padding: 1rem 1rem 1rem 2.5rem;
       margin: 1rem 0;
       box-shadow: 3px 3px 0 0 rgba(0, 0, 0, 0.3);
@@ -444,7 +450,7 @@
       position: absolute;
       top: 2.7rem;
       left: 0.8rem;
-      filter: brightness(0) saturate(100%) invert(64%) sepia(98%) saturate(1173%) hue-rotate(189deg) brightness(103%) contrast(96%);
+      filter: brightness(0) saturate(100%) invert(87%) sepia(21%) saturate(434%) hue-rotate(359deg) brightness(103%) contrast(98%);
     }
 
     .markdown-section ul,
@@ -506,7 +512,7 @@
       -webkit-appearance: none;
       -moz-appearance: none;
       background-color: #1a1a1a;
-      border: 3px solid var(--theme-color);
+      border: 3px solid var(--border-color);
       transition: all 0.2s;
       image-rendering: pixelated;
       box-shadow: 2px 2px 0 0 #000;
@@ -531,8 +537,8 @@
     }
 
     .markdown-section table th {
-      background: #34d39938;
-      border: 2px solid var(--theme-color);
+      background: rgba(64, 64, 64, 0.3);
+      border: 2px solid var(--border-color-hover);
       padding: 0.8rem;
       font-family: 'Ark Pixel 12px', 'Courier New', monospace;
       font-weight: bold;
@@ -544,19 +550,19 @@
       border-top: 0;
     }
     .markdown-section tr:nth-child(2n) {
-      background-color: #34d39918;
+      background-color: rgba(64, 64, 64, 0.1);
       border-top: 0;
     }
 
     .markdown-section table td {
-      border: 2px solid var(--sidebar-border-color);
+      border: 2px solid var(--subtle-border);
       padding: 0.8rem;
       background: rgba(10, 10, 10, 0.3);
       transition: background 0.2s;
     }
 
     .markdown-section table tr:hover td {
-      background: rgba(52, 211, 153, 0.05);
+      background: rgba(253, 230, 138, 0.05);
     }
 
     .markdown-section table td:first-child {
@@ -574,11 +580,12 @@
       left: 0.8rem;
       top: 50%;
       transform: translateY(-50%);
-      filter: brightness(0) saturate(100%) invert(73%) sepia(48%) saturate(449%) hue-rotate(99deg) brightness(95%) contrast(89%);
+      filter: brightness(0) saturate(100%) invert(50%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%);
+      opacity: 0.5;
     }
 
     .markdown-section table tr:hover {
-      background: rgba(52, 211, 153, 0.1);
+      background: rgba(253, 230, 138, 0.08);
     }
 
     /* 图片样式 */
@@ -605,8 +612,8 @@
       border: none;
       height: 4px;
       background: repeating-linear-gradient(90deg,
-          var(--accent-color) 0px,
-          var(--accent-color) 10px,
+          var(--border-color) 0px,
+          var(--border-color) 10px,
           transparent 10px,
           transparent 20px);
       margin: 4rem 0;
@@ -623,11 +630,11 @@
       width: 20px;
       height: 20px;
       background: var(--base-background-color) url('images/gem-icon.svg') center center / 16px 16px no-repeat;
-      filter: brightness(0) saturate(100%) invert(64%) sepia(98%) saturate(1173%) hue-rotate(189deg) brightness(103%) contrast(96%);
+      filter: brightness(0) saturate(100%) invert(25%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(95%) contrast(90%);
     }
 
     .markdown-section table tr:hover td {
-      border-color: var(--theme-color);
+      border-color: var(--border-color-hover);
     }
 
     /* 提示框样式（docsify alerts） */
@@ -635,7 +642,7 @@
     .markdown-section .warn,
     .markdown-section .danger {
       border-radius: 4px !important;
-      border-left: 4px solid var(--theme-color) !important;
+      border-left: 4px solid var(--accent-color) !important;
       padding: 1rem 1rem 1rem 3rem !important;
       box-shadow: 3px 3px 0 0 rgba(0, 0, 0, 0.3) !important;
       position: relative !important;
@@ -687,7 +694,7 @@
     /* 搜索框样式（基础样式，实际主题在底部使用 !important 覆盖） */
     .search input {
       background-color: #1a1a1a;
-      border: 4px solid var(--theme-color);
+      border: 4px solid var(--border-color);
       color: var(--base-color);
       font-family: 'Ark Pixel 12px', 'Courier New', monospace;
       border-radius: 4px;
@@ -703,7 +710,7 @@
       box-shadow:
         0 0 0 2px #000,
         4px 4px 0 0 var(--accent-color),
-        0 0 10px rgba(96, 165, 250, 0.3);
+        0 0 10px rgba(253, 230, 138, 0.3);
       outline: none;
     }
 
@@ -713,7 +720,7 @@
     }
 
     .search .results-panel {
-      border: 4px solid var(--theme-color);
+      border: 4px solid var(--border-color);
       box-shadow:
         0 0 0 2px #000,
         6px 6px 0 0 #000;
@@ -721,16 +728,16 @@
     }
 
     .search .matching-post {
-      border-bottom: 2px solid var(--sidebar-border-color);
+      border-bottom: 2px solid var(--subtle-border);
     }
 
     .search .matching-post:hover {
-      background: rgba(52, 211, 153, 0.1);
+      background: rgba(253, 230, 138, 0.1);
     }
 
     /* 复制代码按钮样式 */
     .docsify-copy-code-button {
-      background: var(--theme-color) !important;
+      background: var(--accent-color) !important;
       color: #000 !important;
       border: 2px solid #000 !important;
       font-family: 'Ark Pixel 12px', 'Courier New', monospace !important;
@@ -744,14 +751,15 @@
       display: inline-block;
       width: 12px;
       height: 12px;
-      background: var(--theme-color) url('images/book.svg') center center / 12px 12px no-repeat;
+      background: url('images/book.svg') center center / 12px 12px no-repeat;
       margin-right: 4px;
       transform: translateY(-1px);
       vertical-align: middle;
+      filter: brightness(0);
     }
 
     .docsify-copy-code-button:hover {
-      background: var(--accent-color) !important;
+      background: var(--theme-color) !important;
       box-shadow: 2px 2px 0 0 #000 !important;
     }
 
@@ -760,7 +768,7 @@
       background: #0a0a0a url('images/machine-learning-header.webp') center center / cover no-repeat !important;
       position: relative;
       overflow: hidden;
-      border-bottom: 4px solid var(--theme-color);
+      border-bottom: 4px solid var(--border-color-hover);
       box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
     }
 
@@ -824,14 +832,14 @@
     section.cover .cover-main>p:first-child img {
       max-width: 360px;
       image-rendering: pixelated;
-      filter: drop-shadow(6px 6px 0 #000) drop-shadow(0 0 30px rgba(52, 211, 153, 0.4));
+      filter: drop-shadow(6px 6px 0 #000) drop-shadow(0 0 30px rgba(253, 230, 138, 0.3));
       animation: float 3s ease-in-out infinite;
-      border: 4px solid var(--theme-color);
+      border: 4px solid var(--border-color-hover);
       padding: 1rem;
       background: rgba(10, 10, 10, 0.8);
       box-shadow:
         0 0 0 2px #000,
-        0 0 0 6px var(--theme-color),
+        0 0 0 6px var(--border-color),
         8px 8px 0 0 #000;
     }
 
@@ -904,21 +912,22 @@
     }
 
     section.cover h1 span {
-      color: var(--theme-color-light);
+      color: var(--accent-color);
     }
 
     section.cover h1 small {
-      color: var(--theme-color-dark);
+      color: var(--base-color);
       font-size: 0.4em;
       vertical-align: middle;
       bottom: -.4rem;
       right: 0.6rem;
+      opacity: 0.7;
     }
 
     section.cover blockquote {
       font-family: 'Courier New', monospace;
       color: var(--base-color);
-      border-left: 4px solid var(--theme-color);
+      border-left: 4px solid var(--accent-color);
       background: rgba(26, 26, 26, 0.9);
       padding: 1rem 1.5rem 1rem 3rem;
       box-shadow: 4px 4px 0 0 #000;
@@ -1068,7 +1077,7 @@
     /* 搜索框样式 */
     .search input {
       background: #1a1a1a !important;
-      border: 3px solid var(--theme-color) !important;
+      border: 3px solid var(--border-color) !important;
       color: var(--base-color) !important;
       border-radius: 4px !important;
       padding: 0.5rem 0.5rem 0.5rem 2.5rem !important;
@@ -1079,7 +1088,7 @@
 
     .search input:focus {
       border-color: var(--accent-color) !important;
-      box-shadow: 3px 3px 0 0 #000, 0 0 10px rgba(96, 165, 250, 0.3) !important;
+      box-shadow: 3px 3px 0 0 #000, 0 0 10px rgba(253, 230, 138, 0.3) !important;
       outline: none !important;
     }
 
@@ -1094,23 +1103,24 @@
       width: 16px;
       height: 16px;
       background: url('images/search-icon.svg') center center / contain no-repeat;
-      filter: brightness(0) saturate(100%) invert(73%) sepia(48%) saturate(449%) hue-rotate(99deg) brightness(95%) contrast(89%);
+      filter: brightness(0) saturate(100%) invert(50%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%);
+      opacity: 0.6;
       z-index: 1;
     }
 
     .search .results-panel {
       background: #1a1a1a !important;
-      border: 3px solid var(--theme-color) !important;
+      border: 3px solid var(--border-color) !important;
       border-radius: 4px !important;
       box-shadow: 6px 6px 0 0 #000 !important;
     }
 
     .search .results-panel .matching-post {
-      border-bottom: 2px solid rgba(52, 211, 153, 0.2) !important;
+      border-bottom: 2px solid var(--subtle-border) !important;
     }
 
     .search .results-panel .matching-post:hover {
-      background: rgba(52, 211, 153, 0.1) !important;
+      background: rgba(253, 230, 138, 0.1) !important;
     }
 
     /* 加载动画优化 */
@@ -1160,23 +1170,24 @@
 
     /* 分页导航样式 */
     .docsify-pagination-container {
-      border-top: 3px solid var(--theme-color);
+      border-top: 3px solid var(--border-color);
       padding-top: 2rem;
       margin-top: 3rem;
     }
 
-    .pagination-item-title {
+    .markdown-section .pagination-item-title {
       font-family: 'Ark Pixel 12px', 'Courier New', monospace !important;
-      color: var(--theme-color) !important;
+      color: var(--accent-color) !important;
     }
 
     .pagination-item-label {
-      color: var(--accent-color) !important;
+      color: var(--base-color) !important;
+      opacity: 0.7;
     }
 
     .pagination-item:hover .pagination-item-title {
       color: var(--accent-color) !important;
-      text-shadow: 0 0 5px rgba(96, 165, 250, 0.5);
+      text-shadow: 0 0 5px rgba(253, 230, 138, 0.5);
     }
   </style>
 </head>

@@ -8,9 +8,9 @@
   width: 100%;
   padding: 0.4rem 2.5rem 0.4rem 1rem;
   background: linear-gradient(90deg,
-      rgba(52, 211, 153, 0.15) 0%,
-      rgba(96, 165, 250, 0.15) 100%);
-  border-bottom: 2px solid var(--theme-color, #34d399);
+      rgba(64, 64, 64, 0.15) 0%,
+      rgba(253, 230, 138, 0.15) 100%);
+  border-bottom: 2px solid rgba(253, 230, 138, 0.4);
   box-shadow:
     0 0 0 1px #000,
     0 2px 0 0 #000,
@@ -40,18 +40,18 @@
   /* 网格背景 */
   background-image:
     linear-gradient(90deg,
-      rgba(52, 211, 153, 0.15) 0%,
-      rgba(96, 165, 250, 0.15) 100%),
+      rgba(64, 64, 64, 0.15) 0%,
+      rgba(253, 230, 138, 0.15) 100%),
     repeating-linear-gradient(0deg,
       transparent,
       transparent 9px,
-      rgba(52, 211, 153, 0.03) 9px,
-      rgba(52, 211, 153, 0.03) 10px),
+      rgba(253, 230, 138, 0.03) 9px,
+      rgba(253, 230, 138, 0.03) 10px),
     repeating-linear-gradient(90deg,
       transparent,
       transparent 9px,
-      rgba(52, 211, 153, 0.03) 9px,
-      rgba(52, 211, 153, 0.03) 10px);
+      rgba(253, 230, 138, 0.03) 9px,
+      rgba(253, 230, 138, 0.03) 10px);
 
   /* 入场动画 */
   animation: bannerSlideDown 0.4s ease-out;
@@ -70,7 +70,7 @@
 
 /* Banner 内链接样式 */
 .pixel-top-banner a {
-  color: var(--accent-color, #60a5fa);
+  color: var(--accent-color, #fde68a);
   text-decoration: none;
   font-weight: bold;
   padding: 0.2rem 0.5rem;
@@ -85,7 +85,7 @@
   border-bottom-color: var(--theme-color, #34d399);
   text-shadow:
     1px 1px 0 #000,
-    0 0 8px rgba(52, 211, 153, 0.6);
+    0 0 8px rgba(52, 211, 153, 0.5);
 }
 
 /* 关闭按钮 */
@@ -95,8 +95,8 @@
   right: 0.5rem;
   transform: translateY(-50%);
   background: rgba(10, 10, 10, 0.8);
-  border: 2px solid var(--theme-color, #34d399);
-  color: var(--theme-color, #34d399);
+  border: 2px solid rgba(253, 230, 138, 0.6);
+  color: rgba(253, 230, 138, 0.8);
   width: 20px;
   height: 20px;
   display: flex;
@@ -112,8 +112,9 @@
 }
 
 .pixel-banner-close:hover {
-  background: var(--theme-color, #34d399);
+  background: var(--accent-color, #fde68a);
   color: #000;
+  border-color: var(--accent-color, #fde68a);
   box-shadow: 1px 1px 0 0 #000;
   transform: translateY(-50%) translate(1px, 1px);
 }

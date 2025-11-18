@@ -94,7 +94,6 @@
         html += `
           <li class="sidebar-item" data-item-id="${itemId}" data-path="${itemPath}">
             <a href="${href}" class="item-link">
-              <span class="item-icon"></span>
               <span class="item-title">${itemTitle}</span>
             </a>
             <ul class="item-subsections" id="${itemId}-subsections"></ul>
@@ -386,14 +385,14 @@
     /* 搜索框容器 */
     .sidebar-search {
       padding: 1rem;
-      border-bottom: 2px solid rgba(52, 211, 153, 0.3);
+      border-bottom: 2px solid rgba(64, 64, 64, 0.6);
     }
 
     /* 搜索输入框 */
     .sidebar-search .search-input {
       width: 100%;
       background: #1a1a1a !important;
-      border: 3px solid var(--theme-color) !important;
+      border: 3px solid rgba(64, 64, 64, 0.8) !important;
       color: var(--base-color) !important;
       border-radius: 4px !important;
       padding: 0.6rem 0.6rem 0.6rem 2.5rem !important;
@@ -405,7 +404,7 @@
 
     .sidebar-search .search-input:focus {
       border-color: var(--accent-color) !important;
-      box-shadow: 3px 3px 0 0 #000, 0 0 10px rgba(96, 165, 250, 0.3) !important;
+      box-shadow: 3px 3px 0 0 #000, 0 0 10px rgba(253, 230, 138, 0.3) !important;
       outline: none !important;
     }
 
@@ -425,7 +424,8 @@
       width: 16px;
       height: 16px;
       background: url('images/search-icon.svg') center center / contain no-repeat;
-      filter: brightness(0) saturate(100%) invert(64%) sepia(98%) saturate(1173%) hue-rotate(189deg) brightness(103%) contrast(96%);
+      filter: brightness(0) saturate(100%) invert(50%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%);
+      opacity: 0.6;
       pointer-events: none;
     }
 
@@ -447,8 +447,8 @@
       text-shadow: 3px 3px 0 #000;
       font-family: 'Ark Pixel 12px', 'Courier New', monospace;
       padding: 1.5rem 1rem;
-      border-bottom: 3px solid var(--sidebar-border-color);
-      background: rgba(52, 211, 153, 0.05);
+      border-bottom: 3px solid rgba(64, 64, 64, 0.6);
+      background: rgba(64, 64, 64, 0.15);
       position: relative;
       display: flex;
       align-items: center;
@@ -464,7 +464,7 @@
     }
 
     .app-name-link:hover .app-name {
-      background: rgba(52, 211, 153, 0.1);
+      background: rgba(253, 230, 138, 0.1);
     }
 
     /* 侧边栏滚动条样式 - 与主题保持一致 */
@@ -476,12 +476,12 @@
 
     .sidebar::-webkit-scrollbar-track {
       background: #1a1a1a !important;
-      border: 2px solid var(--theme-color) !important;
+      border: 2px solid rgba(64, 64, 64, 0.6) !important;
       border-radius: 2px !important;
     }
 
     .sidebar::-webkit-scrollbar-thumb {
-      background: var(--theme-color) !important;
+      background: rgba(96, 96, 96, 0.8) !important;
       border: 2px solid #000 !important;
       border-radius: 2px !important;
       position: relative;
@@ -510,7 +510,7 @@
     /* 分类容器 */
     .sidebar-category {
       margin-bottom: 0.5rem;
-      border-bottom: 2px solid rgba(52, 211, 153, 0.2);
+      border-bottom: 2px solid rgba(64, 64, 64, 0.3);
       padding-bottom: 0.5rem;
     }
 
@@ -524,7 +524,7 @@
       align-items: center;
       padding: 0.8rem 1rem;
       cursor: url('images/cusor-pointer.png'), pointer !important;
-      color: var(--theme-color);
+      color: var(--accent-color);
       font-weight: bold;
       font-size: 0.95rem;
       letter-spacing: 0.05em;
@@ -535,8 +535,8 @@
     }
 
     .category-header:hover {
-      background: rgba(52, 211, 153, 0.1);
-      border-left-color: var(--theme-color);
+      background: rgba(253, 230, 138, 0.1);
+      border-left-color: var(--accent-color);
     }
 
     /* 分类名称 */
@@ -551,7 +551,8 @@
       height: 12px;
       background: url('images/right-arrow.svg') center center / contain no-repeat;
       transition: transform 0.3s;
-      filter: brightness(0) saturate(100%) invert(64%) sepia(98%) saturate(1173%) hue-rotate(189deg) brightness(103%) contrast(96%);
+      filter: brightness(0) saturate(100%) invert(87%) sepia(21%) saturate(434%) hue-rotate(359deg) brightness(103%) contrast(98%);
+      opacity: 0.8;
     }
 
     .sidebar-category.expanded .category-toggle {
@@ -592,39 +593,20 @@
     }
 
     .item-link:hover {
-      color: var(--theme-color);
-      background: rgba(52, 211, 153, 0.1);
-      border-left-color: var(--theme-color);
+      color: var(--accent-color);
+      background: rgba(253, 230, 138, 0.08);
+      border-left-color: var(--accent-color);
       text-shadow: 1px 1px 0 #000;
     }
 
     /* 条目图标 */
-    .item-icon {
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      background: url('images/right-arrow.svg') center center / contain no-repeat;
-      margin-right: 0.1rem;
-      opacity: 0.6;
-      transition: opacity 0.2s;
-    }
-
-    .item-link:hover .item-icon,
-    .sidebar-item.active .item-icon {
-      opacity: 1;
-    }
 
     /* 激活状态 */
     .sidebar-item.active > .item-link {
       color: var(--accent-color);
-      background: rgba(96, 165, 250, 0.1);
+      background: rgba(253, 230, 138, 0.1);
       border-left-color: var(--accent-color);
       font-weight: bold;
-    }
-
-    .sidebar-item.active .item-icon {
-      filter: brightness(0) saturate(100%) invert(64%) sepia(98%) saturate(1173%) hue-rotate(189deg) brightness(103%) contrast(96%);
-      animation: blink 1s step-end infinite;
     }
 
     @keyframes blink {
@@ -637,7 +619,7 @@
       list-style: none;
       margin: 0;
       padding: 0;
-      border-left: 2px dotted rgba(52, 211, 153, 0.3);
+      border-left: 2px dotted rgba(64, 64, 64, 0.4);
       margin-left: 2.5rem;
     }
 
@@ -665,10 +647,10 @@
     }
 
     .subsection-link:hover {
-      color: var(--theme-color);
+      color: var(--accent-color);
       opacity: 1;
-      background: rgba(52, 211, 153, 0.05);
-      border-left-color: var(--theme-color);
+      background: rgba(253, 230, 138, 0.05);
+      border-left-color: var(--accent-color);
     }
 
     .subsection-link.active {
